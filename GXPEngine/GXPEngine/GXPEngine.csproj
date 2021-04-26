@@ -76,5 +76,8 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
+    <Compile Include="Skull.cs" />
+    <Compile Include="Vec2.cs" />
+    <Compile Include="Wall.cs" />
   </ItemGroup>
 </Project>
