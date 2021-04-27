@@ -73,7 +73,6 @@ public class MyGame : Game
 			{
 				SetGravityDirection(GravityDirection.RIGHT);
 			}
-			canSwitchGravity = false;
 		}
 	}
 
@@ -84,7 +83,8 @@ public class MyGame : Game
 	public void SetGravityDirection(GravityDirection direction)
     {
 		gravityDirection = direction;
-        switch (gravityDirection)
+		canSwitchGravity = false;
+		switch (gravityDirection)
         {
 			case GravityDirection.UP:
                 {
@@ -109,7 +109,7 @@ public class MyGame : Game
 					GravityVector = _rightGravityVec;
 					GravityVector = GravityVector * GravityAccaleration;
 					break;
-				}
+				}				
 		}
     }
 
