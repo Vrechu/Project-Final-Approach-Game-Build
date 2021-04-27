@@ -43,6 +43,7 @@ public class MyGame : Game
 		//------------------------------------------------end-of-example-code-------------------------
 		GravityInputs();
 		GravitySwitchCooldown();
+		Console.WriteLine(canSwitchGravity);
 	}
 
 	static void Main()							// Main() is the first method that's called when the program is run
@@ -115,13 +116,15 @@ public class MyGame : Game
 
 	private void GravitySwitchCooldown()
     {
-		if (canSwitchGravity)
-		{
-			oldTime = Time.time;
-		}
-		if (Time.time - oldTime > _gravitySwitchCooldownTime * 1000)
+		if (!canSwitchGravity)
+        {
+			oldTime -= Time.deltaTime;
+        }
+
+		if (oldTime < 0)
         {
 			canSwitchGravity = true;
+			oldTime = _gravitySwitchCooldownTime * 1000;
         }
     }
 }
