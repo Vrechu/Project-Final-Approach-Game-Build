@@ -6,11 +6,14 @@ using GXPEngine;
 
 class Wall : Sprite
 {
-    public Wall(float px, float py) : base("square.png")
+    public Wall(float px, float py, float xScale, float yScale) : base("square.png")
     {
         SetOrigin(width / 2, height / 2);
         x = px;
         y = py;
+
+        SetScaleXY(xScale, yScale);
+
     }
 }
 
