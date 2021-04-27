@@ -9,12 +9,17 @@ public class MyGame : Game
 		UP, DOWN, LEFT, RIGHT
     }
 	public GravityDirection gravityDirection;
-	public static float GravityAccaleration = 0.1f;
+
+	public static float GravityAccaleration = 0.2f; // Rate of acceleration
 	public static Vec2 GravityVector = new Vec2();
-	private Vec2 UpGravityVec = new Vec2(0, -1).Normalized();
-	private Vec2 DownGravityVec = new Vec2(0, 1).Normalized();
-	private Vec2 LeftGravityVec = new Vec2(-1, 0).Normalized();
-	private Vec2 RightGravityVec = new Vec2(1, 0).Normalized();
+	private Vec2 _upGravityVec = new Vec2(0, -1).Normalized();
+	private Vec2 _downGravityVec = new Vec2(0, 1).Normalized();
+	private Vec2 _leftGravityVec = new Vec2(-1, 0).Normalized();
+	private Vec2 _rightGravityVec = new Vec2(1, 0).Normalized();
+
+	private int _gravitySwitchCooldownTime = 3; //Cooldown timer in seconds
+	private bool canSwitchGravity = true;
+	private int oldTime = Time.time;
 
 	public MyGame() : base(1920, 1080, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
@@ -24,6 +29,8 @@ public class MyGame : Game
 		AddChild(new Wall(width / 2, height, 100, 0.5f));
 		AddChild(new Wall(0, height/2, 0.5f, 100));
 		AddChild(new Wall(width, height/2, 0.5f, 100));
+
+		SetGravityDirection(GravityDirection.DOWN);
 	}
 
     void Update()
@@ -35,6 +42,7 @@ public class MyGame : Game
 		}
 		//------------------------------------------------end-of-example-code-------------------------
 		GravityInputs();
+		GravitySwitchCooldown();
 	}
 
 	static void Main()							// Main() is the first method that's called when the program is run
@@ -42,26 +50,37 @@ public class MyGame : Game
 		new MyGame().Start();					// Create a "MyGame" and start it
 	}
 
+	/// <summary>
+	/// Key imputs for switching gravity direction
+	/// </summary>
 	private void GravityInputs()
     {
-        if (Input.GetKey(Key.W))
+		if (canSwitchGravity)
 		{
-			SetGravityDirection(GravityDirection.UP);
+			if (Input.GetKey(Key.UP))
+			{
+				SetGravityDirection(GravityDirection.UP);
+			}
+			else if (Input.GetKey(Key.DOWN))
+			{
+				SetGravityDirection(GravityDirection.DOWN);
+			}
+			else if (Input.GetKey(Key.LEFT))
+			{
+				SetGravityDirection(GravityDirection.LEFT);
+			}
+			else if (Input.GetKey(Key.RIGHT))
+			{
+				SetGravityDirection(GravityDirection.RIGHT);
+			}
+			canSwitchGravity = false;
 		}
-		else if (Input.GetKey(Key.S))
-		{
-			SetGravityDirection(GravityDirection.DOWN);
-		}
-		else if (Input.GetKey(Key.A))
-		{
-			SetGravityDirection(GravityDirection.LEFT);
-		}
-		else if (Input.GetKey(Key.D))
-		{
-			SetGravityDirection(GravityDirection.RIGHT);
-		}		
 	}
 
+	/// <summary>
+	/// Sets the gravity vector in the specified direction
+	/// </summary>
+	/// <param name="direction">the direction that the gravity should switch to </param>
 	public void SetGravityDirection(GravityDirection direction)
     {
 		gravityDirection = direction;
@@ -69,28 +88,40 @@ public class MyGame : Game
         {
 			case GravityDirection.UP:
                 {
-					GravityVector = UpGravityVec;
+					GravityVector = _upGravityVec;
 					GravityVector = GravityVector * GravityAccaleration;
 					break;
                 }
 			case GravityDirection.DOWN:
 				{
-					GravityVector = DownGravityVec;
+					GravityVector = _downGravityVec;
 					GravityVector = GravityVector * GravityAccaleration;
 					break;
 				}
 			case GravityDirection.LEFT:
 				{
-					GravityVector = LeftGravityVec;
+					GravityVector = _leftGravityVec;
 					GravityVector = GravityVector * GravityAccaleration;
 					break;
 				}
 			case GravityDirection.RIGHT:
 				{
-					GravityVector = RightGravityVec;
+					GravityVector = _rightGravityVec;
 					GravityVector = GravityVector * GravityAccaleration;
 					break;
 				}
 		}
+    }
+
+	private void GravitySwitchCooldown()
+    {
+		if (canSwitchGravity)
+		{
+			oldTime = Time.time;
+		}
+		if (Time.time - oldTime > _gravitySwitchCooldownTime * 1000)
+        {
+			canSwitchGravity = true;
+        }
     }
 }

@@ -18,11 +18,10 @@ class Skull : Sprite
 
     private void Update()
     {
-        UpdateScreenPosition();
-        Console.WriteLine(isGrounded);
+        MoveSkull();
     }
 
-    private void UpdateScreenPosition()
+    private void MoveSkull()
     {
         Vec2 _oldPosition = new Vec2(x, y);
         _velocity += MyGame.GravityVector;
@@ -36,14 +35,6 @@ class Skull : Sprite
         else if( _speed > 0)
         {
             isGrounded = false;
-        }
-    }
-
-    void OnCollision(GameObject other)
-    {
-        if (other is Wall)
-        {
-            _velocity = new Vec2(0, 0);
         }
     }
 }
