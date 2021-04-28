@@ -25,6 +25,8 @@ public class MyGame : Game
 
 	public MyGame() : base(1920, 1080, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
+		Skull.OnDeath += Reset;
+
 		SetGravityDirection(GravityDirection.DOWN);
 
 		AddChild(new Skull(width/2, height/2));
@@ -40,6 +42,11 @@ public class MyGame : Game
 		AddChild(new Spike(width - 50, height / 2, 270));
 
 		AddChild(new Legs(width - 100, height -100));
+	}
+
+	private void OnDestroy()
+    {
+		Skull.OnDeath -= Reset;
 	}
 
     void Update()
@@ -138,5 +145,10 @@ public class MyGame : Game
 			canSwitchGravity = true;
 			oldTime = _gravitySwitchCooldownTime * 1000;
         }
+    }
+
+	private void Reset()
+    {
+		SetGravityDirection(GravityDirection.DOWN);
     }
 }

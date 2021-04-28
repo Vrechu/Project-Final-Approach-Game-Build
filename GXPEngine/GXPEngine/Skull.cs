@@ -6,6 +6,7 @@ using GXPEngine;
 
 class Skull : Sprite
 {
+    public static event Action OnDeath;
     private float _speed = 0;
     private Vec2 _gravityVelocity;
     private Vec2 _WalkingDirection = new Vec2(0, 1);
@@ -13,12 +14,17 @@ class Skull : Sprite
     private bool isGrounded = false;
     private bool canWalk = false;
 
+    private Vec2 _startingPosition;
+    private float _startingRotation;
+
     public Skull(float px, float py) : base("triangle.png")
     {
         SetOrigin(width / 2, height / 2);
         x = px;
         y = py;
         MyGame.OnGravitySwitch += RotateSkull;
+        _startingPosition.SetXY(x, y);
+        _startingRotation = rotation;
     }
 
     private void Update()
@@ -56,7 +62,7 @@ class Skull : Sprite
     {
         if (other is Spike)
         {
-            this.LateDestroy();
+            Die();
         }
 
         else if (other is Legs)
@@ -116,5 +122,17 @@ class Skull : Sprite
                 }
         }
         _WalkingDirection = _WalkingDirection.Normalized() * _walkingSpeed;
+    }
+
+    /// <summary>
+    /// moves skull to starting position and sets velocity to 0
+    /// </summary>
+    void Die()
+    {
+        x = _startingPosition.x;
+        y = _startingPosition.y;
+        _gravityVelocity.SetXY(0, 0);
+        OnDeath?.Invoke();
+        rotation = _startingRotation;
     }
 }
