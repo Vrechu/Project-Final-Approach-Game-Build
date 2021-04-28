@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using GXPEngine;
 
-abstract class Wall : Sprite
+abstract class SolidObject : Sprite
 {
-    public Wall(string spriteImage, float px, float py, float xScale, float yScale) : base("square.png")
+    public SolidObject(string spriteImage, float px, float py, float xScale, float yScale) : base(spriteImage)
     {
         SetOrigin(width / 2, height / 2);
         x = px;

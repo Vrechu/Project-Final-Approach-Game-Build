@@ -77,10 +77,11 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-    <Compile Include="Skull.cs" />
+    <Compile Include="SolidObjects\Skull.cs" />
     <Compile Include="Spike.cs" />
-    <Compile Include="StationaryWall.cs" />
+    <Compile Include="SolidObjects\MovingWall.cs" />
+    <Compile Include="SolidObjects\StationaryWall.cs" />
     <Compile Include="Vec2.cs" />
-    <Compile Include="Wall.cs" />
+    <Compile Include="SolidObjects\SolidObject.cs" />
   </ItemGroup>
 </Project>

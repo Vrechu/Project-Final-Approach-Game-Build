@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GXPEngine;
 
-class Skull : Sprite
+class Skull : SolidObject
 {
     public static event Action OnDeath;
     private float _speed = 0;
@@ -17,7 +17,7 @@ class Skull : Sprite
     private Vec2 _startingPosition;
     private float _startingRotation;
 
-    public Skull(float px, float py) : base("triangle.png")
+    public Skull(float px, float py) : base("triangle.png", px, py, 1, 1)
     {
         SetOrigin(width / 2, height / 2);
         x = px;
@@ -39,13 +39,13 @@ class Skull : Sprite
     }
 
     /// <summary>
-    /// Moves the skull into the gravity direction
+    /// Moves the skull into the gravity direction and detects wether the skull is grounded
     /// </summary>
     private void MoveSkull()
     {
         Vec2 _oldPosition = new Vec2(x, y);
         _gravityVelocity += MyGame.GravityVector;
-        MoveUntilCollision(_gravityVelocity.x, _gravityVelocity.y, game.FindObjectsOfType<Wall>());
+        MoveUntilCollision(_gravityVelocity.x, _gravityVelocity.y, game.FindObjectsOfType<SolidObject>());
         _speed = new Vec2(_oldPosition.x - x, _oldPosition.y - y).Length();
         _gravityVelocity = _gravityVelocity.Normalized() * _speed;
         if( _speed == 0)
@@ -62,7 +62,7 @@ class Skull : Sprite
     {
         if (other is Spike)
         {
-            Die();
+            Reset();
         }
 
         else if (other is Legs)
@@ -81,11 +81,11 @@ class Skull : Sprite
         {
             if (Input.GetKey(Key.A))
             {
-                MoveUntilCollision(_WalkingDirection.x*-1, _WalkingDirection.y*-1, game.FindObjectsOfType<Wall>());
+                MoveUntilCollision(_WalkingDirection.x*-1, _WalkingDirection.y*-1, game.FindObjectsOfType<SolidObject>());
             }
             else if (Input.GetKey(Key.D))
             {
-                MoveUntilCollision(_WalkingDirection.x, _WalkingDirection.y, game.FindObjectsOfType<Wall>());
+                MoveUntilCollision(_WalkingDirection.x, _WalkingDirection.y, game.FindObjectsOfType<SolidObject>());
             }
         }
     }
@@ -125,9 +125,9 @@ class Skull : Sprite
     }
 
     /// <summary>
-    /// moves skull to starting position and sets velocity to 0
+    /// moves object to starting position and sets velocity to 0
     /// </summary>
-    void Die()
+    void Reset()
     {
         x = _startingPosition.x;
         y = _startingPosition.y;

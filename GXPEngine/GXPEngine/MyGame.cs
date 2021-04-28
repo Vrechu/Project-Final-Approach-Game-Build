@@ -41,6 +41,8 @@ public class MyGame : Game
 
 		AddChild(new Spike(width - 50, height / 2, 270));
 
+		AddChild(new MovingWall(width - 400, height / 2));
+
 		AddChild(new Legs(width - 100, height -100));
 	}
 
@@ -141,8 +143,12 @@ public class MyGame : Game
         }
     }
 
+	/// <summary>
+	/// returns the gravity to down and resets the cooldown
+	/// </summary>
 	private void Reset()
     {
 		SetGravityDirection(GravityDirection.DOWN);
+		canSwitchGravity = false;
     }
 }
