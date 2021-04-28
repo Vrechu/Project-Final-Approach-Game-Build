@@ -4,11 +4,13 @@ using GXPEngine;								// GXPEngine contains the engine
 
 public class MyGame : Game
 {
-	public  enum GravityDirection
+	public enum GravityDirection
     {
 		UP, DOWN, LEFT, RIGHT
     }
-	public GravityDirection gravityDirection;
+	public static GravityDirection gravityDirection;
+
+	public static event Action OnGravitySwitch;
 
 	public static float GravityAccaleration = 0.2f; // Rate of acceleration
 	public static Vec2 GravityVector = new Vec2();
@@ -17,12 +19,14 @@ public class MyGame : Game
 	private Vec2 _leftGravityVec = new Vec2(-1, 0).Normalized();
 	private Vec2 _rightGravityVec = new Vec2(1, 0).Normalized();
 
-	private int _gravitySwitchCooldownTime = 3; //Cooldown timer in seconds
+	private int _gravitySwitchCooldownTime = 1; //Cooldown timer in seconds
 	private bool canSwitchGravity = true;
 	private int oldTime = Time.time;
 
 	public MyGame() : base(1920, 1080, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
+		SetGravityDirection(GravityDirection.DOWN);
+
 		AddChild(new Skull(width/2, height/2));
 
 		AddChild(new Wall(width / 2, 0, 100, 0.5f));
@@ -30,7 +34,12 @@ public class MyGame : Game
 		AddChild(new Wall(0, height/2, 0.5f, 100));
 		AddChild(new Wall(width, height/2, 0.5f, 100));
 
-		SetGravityDirection(GravityDirection.DOWN);
+		AddChild(new Wall(300, 0, 0.5f, 30));
+		AddChild(new Wall(800, height, 0.5f, 30));
+
+		AddChild(new Spike(width - 50, height / 2, 270));
+
+		
 	}
 
     void Update()
@@ -43,7 +52,6 @@ public class MyGame : Game
 		//------------------------------------------------end-of-example-code-------------------------
 		GravityInputs();
 		GravitySwitchCooldown();
-		Console.WriteLine(canSwitchGravity);
 	}
 
 	static void Main()							// Main() is the first method that's called when the program is run
@@ -74,6 +82,7 @@ public class MyGame : Game
 			{
 				SetGravityDirection(GravityDirection.RIGHT);
 			}
+			OnGravitySwitch?.Invoke();
 		}
 	}
 
@@ -114,6 +123,9 @@ public class MyGame : Game
 		}
     }
 
+	/// <summary>
+	/// Counts down time until you can switch gravity again
+	/// </summary>
 	private void GravitySwitchCooldown()
     {
 		if (!canSwitchGravity)
