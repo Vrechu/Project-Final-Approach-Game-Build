@@ -31,13 +31,13 @@ public class MyGame : Game
 
 		AddChild(new Skull(width/2, height/2));
 
-		AddChild(new Wall(width / 2, 0, 100, 0.5f));
-		AddChild(new Wall(width / 2, height, 100, 0.5f));
-		AddChild(new Wall(0, height/2, 0.5f, 100));
-		AddChild(new Wall(width, height/2, 0.5f, 100));
+		AddChild(new StationaryWall(width / 2, 0, 100, 0.5f));
+		AddChild(new StationaryWall(width / 2, height, 100, 0.5f));
+		AddChild(new StationaryWall(0, height/2, 0.5f, 100));
+		AddChild(new StationaryWall(width, height/2, 0.5f, 100));
 
-		AddChild(new Wall(300, 0, 0.5f, 30));
-		AddChild(new Wall(800, height, 0.5f, 30));
+		AddChild(new StationaryWall(300, 0, 0.5f, 30));
+		AddChild(new StationaryWall(800, height, 0.5f, 30));
 
 		AddChild(new Spike(width - 50, height / 2, 270));
 
@@ -51,12 +51,6 @@ public class MyGame : Game
 
     void Update()
 	{
-		//----------------------------------------------------example-code----------------------------
-		if (Input.GetKeyDown(Key.SPACE)) // When space is pressed...
-		{
-			new Sound("ping.wav").Play(); // ...play a sound
-		}
-		//------------------------------------------------end-of-example-code-------------------------
 		GravityInputs();
 		GravitySwitchCooldown();
 	}

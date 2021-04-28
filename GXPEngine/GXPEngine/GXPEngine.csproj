@@ -79,6 +79,7 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Skull.cs" />
     <Compile Include="Spike.cs" />
+    <Compile Include="StationaryWall.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
