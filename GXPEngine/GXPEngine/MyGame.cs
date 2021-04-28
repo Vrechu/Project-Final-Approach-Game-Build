@@ -19,7 +19,7 @@ public class MyGame : Game
 	private Vec2 _leftGravityVec = new Vec2(-1, 0).Normalized();
 	private Vec2 _rightGravityVec = new Vec2(1, 0).Normalized();
 
-	private int _gravitySwitchCooldownTime = 1; //Cooldown timer in seconds
+	private int _gravitySwitchCooldownTime = 3; //Cooldown timer in seconds
 	private bool canSwitchGravity = true;
 	private int oldTime = Time.time;
 
@@ -39,7 +39,7 @@ public class MyGame : Game
 
 		AddChild(new Spike(width - 50, height / 2, 270));
 
-		
+		AddChild(new Legs(width - 100, height -100));
 	}
 
     void Update()

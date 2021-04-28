@@ -11,7 +11,7 @@ class Skull : Sprite
     private Vec2 _WalkingDirection = new Vec2(0, 1);
     private float _walkingSpeed = 5;
     private bool isGrounded = false;
-    private bool canWalk = true;
+    private bool canWalk = false;
 
     public Skull(float px, float py) : base("triangle.png")
     {
@@ -57,6 +57,12 @@ class Skull : Sprite
         if (other is Spike)
         {
             this.LateDestroy();
+        }
+
+        else if (other is Legs)
+        {
+            canWalk = true;
+            other.LateDestroy();
         }
     }
 
