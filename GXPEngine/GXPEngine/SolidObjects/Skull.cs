@@ -30,6 +30,7 @@ class Skull : SolidObject
     private void Update()
     {
         MoveSkull();
+        CheckIfGounded();
         Walk();
     }
 
@@ -48,11 +49,15 @@ class Skull : SolidObject
         MoveUntilCollision(_gravityVelocity.x, _gravityVelocity.y, game.FindObjectsOfType<SolidObject>());
         _speed = new Vec2(_oldPosition.x - x, _oldPosition.y - y).Length();
         _gravityVelocity = _gravityVelocity.Normalized() * _speed;
-        if( _speed == 0)
+    }
+
+    private void CheckIfGounded()
+    {
+        if (_speed == 0)
         {
             isGrounded = true;
         }
-        else if( _speed > 0)
+        else if (_speed > 0)
         {
             isGrounded = false;
         }
