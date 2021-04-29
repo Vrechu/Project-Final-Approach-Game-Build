@@ -8,8 +8,7 @@ class Legs : Sprite
 {
     public Legs(float px, float py) : base("circle.png")
     {
-        x = px;
-        y = py;
+        SetXY(px, py);
     }
 }
 
