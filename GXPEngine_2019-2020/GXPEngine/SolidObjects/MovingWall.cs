@@ -8,17 +8,15 @@ class MovingWall : SolidObject
 {
     private float _speed = 0;
     private Vec2 _gravityVelocity;
-
-    private Vec2 _startingPosition;
     public MovingWall(string SpriteImage, float px, float py) : base(SpriteImage , px, py)
     {
-        Skull.OnDeath += Reset;
-        _startingPosition.SetXY(x, y);
+        SetScaleXY(0.95f, 1);
+        MyGame.OnGravitySwitch += RotateWall;
     }
 
     private void OnDestroy()
     {
-        Skull.OnDeath -= Reset;
+        MyGame.OnGravitySwitch -= RotateWall;
     }
 
     void Update()
@@ -39,13 +37,33 @@ class MovingWall : SolidObject
     }
 
     /// <summary>
-    /// moves object to starting position and sets velocity to 0
+    /// Rotates the skull depending on the gravity direction
     /// </summary>
-    void Reset()
+    private void RotateWall()
     {
-        x = _startingPosition.x;
-        y = _startingPosition.y;
-        _gravityVelocity.SetXY(0, 0);
+        switch (MyGame.gravityDirection)
+        {
+            case MyGame.GravityDirection.UP:
+                {
+                    rotation = 180;
+                    break;
+                }
+            case MyGame.GravityDirection.DOWN:
+                {
+                    rotation = 0;
+                    break;
+                }
+            case MyGame.GravityDirection.LEFT:
+                {
+                    rotation = 90;
+                    break;
+                }
+            case MyGame.GravityDirection.RIGHT:
+                {
+                    rotation = 270;
+                    break;
+                }
+        }
     }
 }
 

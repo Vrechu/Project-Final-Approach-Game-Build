@@ -6,7 +6,6 @@ using GXPEngine;
 
 class Skull : SolidObject
 {
-    public static event Action OnDeath;
     private float _speed = 0;
     private Vec2 _gravityVelocity;
     private Vec2 _WalkingDirection = new Vec2(0, 1);
@@ -14,19 +13,16 @@ class Skull : SolidObject
     private bool isGrounded = false;
     private bool canWalk = false;
 
-    private Vec2 _startingPosition;
-    private float _startingRotation;
-    private Vec2 _position;
-    private Vec2 _oldposition;    
+    private InteractionHitbox _hitbox;
 
     public Skull(float px, float py) : base("triangle.png", px, py)
     {
         SetXY(px, py);
-        _position.SetXY(x, y);
+        SetScaleXY(0.95f, 1);
+        AddChild(_hitbox = new InteractionHitbox(this));
+
         MyGame.OnGravitySwitch += RotateSkull;
-        _startingPosition.SetXY(x, y);
-        _startingRotation = rotation;
-        SetScaleXY(0.5f, 1);
+        InteractionHitbox.OnLegsPickup += PickupLegs;
     }
 
     private void Update()
@@ -39,6 +35,7 @@ class Skull : SolidObject
     private void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateSkull;
+        InteractionHitbox.OnLegsPickup -= PickupLegs;
     }
 
     /// <summary>
@@ -65,20 +62,6 @@ class Skull : SolidObject
         else if (_speed > 0)
         {
             isGrounded = false;
-        }
-    }
-
-    private void OnCollision(GameObject other)
-    {
-        if (other is Spike)
-        {
-            Reset();
-        }
-
-        else if (other is Legs)
-        {
-            canWalk = true;
-            other.LateDestroy();
         }
     }
 
@@ -135,15 +118,8 @@ class Skull : SolidObject
         _WalkingDirection = _WalkingDirection.Normalized() * _walkingSpeed;
     }
 
-    /// <summary>
-    /// moves object to starting position and sets velocity to 0
-    /// </summary>
-    void Reset()
+    private void PickupLegs()
     {
-        x = _startingPosition.x;
-        y = _startingPosition.y;
-        _gravityVelocity.SetXY(0, 0);
-        OnDeath?.Invoke();
-        rotation = _startingRotation;
+        canWalk = true;
     }
 }

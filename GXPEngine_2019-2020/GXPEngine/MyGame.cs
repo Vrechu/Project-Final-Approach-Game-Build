@@ -55,6 +55,7 @@ public class MyGame : Game
 	{
 		GravityInputs();
 		GravitySwitchCooldown();
+		Console.WriteLine(gravityDirection);
 	}
 
 	static void Main()							// Main() is the first method that's called when the program is run
