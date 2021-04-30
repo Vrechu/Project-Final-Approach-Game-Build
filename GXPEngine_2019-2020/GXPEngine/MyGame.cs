@@ -183,21 +183,6 @@ public class MyGame : Game
 	public void StartLevel(string levelName)
     {
         ClosePreviousScreen();
-        /*AddChild(new Skull(width / 2, height / 2));
-
-        AddChild(new StationaryWall("square.png", width / 2, 0, 100, 0.5f));
-        AddChild(new StationaryWall("square.png", width / 2, height, 100, 0.5f));
-        AddChild(new StationaryWall("square.png", 0, height / 2, 0.5f, 100));
-        AddChild(new StationaryWall("square.png", width, height / 2, 0.5f, 100));
-
-        AddChild(new StationaryWall("square.png", 300, 0, 0.5f, 30));
-        AddChild(new StationaryWall("square.png", 800, height, 0.5f, 30));
-
-        AddChild(new Spike(width - 50, height / 2, 270));
-
-        AddChild(new MovingWall(400, height / 2));
-
-        AddChild(new Legs(width - 100, height - 100));*/
         AddChild(new Level(levelName));
 
     }

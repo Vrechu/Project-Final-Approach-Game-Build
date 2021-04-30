@@ -16,14 +16,17 @@ class Skull : SolidObject
 
     private Vec2 _startingPosition;
     private float _startingRotation;
+    private Vec2 _position;
+    private Vec2 _oldposition;    
 
-    public Skull(float px, float py) : base("triangle.png", px, py, 1, 1)
+    public Skull(float px, float py) : base("triangle.png", px, py)
     {
-        SetOrigin(width / 2, height / 2);
         SetXY(px, py);
+        _position.SetXY(x, y);
         MyGame.OnGravitySwitch += RotateSkull;
         _startingPosition.SetXY(x, y);
         _startingRotation = rotation;
+        SetScaleXY(0.5f, 1);
     }
 
     private void Update()

@@ -10,7 +10,7 @@ class MovingWall : SolidObject
     private Vec2 _gravityVelocity;
 
     private Vec2 _startingPosition;
-    public MovingWall(float px, float py) : base("colors.png", px, py, 1, 1)
+    public MovingWall(string SpriteImage, float px, float py) : base(SpriteImage , px, py)
     {
         Skull.OnDeath += Reset;
         _startingPosition.SetXY(x, y);

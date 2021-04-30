@@ -6,12 +6,10 @@ using GXPEngine;
 
 abstract class SolidObject : Sprite
 {
-    public SolidObject(string spriteImage, float px, float py, float xScale, float yScale) : base(spriteImage)
+    public SolidObject(string spriteImage, float px, float py) : base(spriteImage)
     {
         SetOrigin(width / 2, height / 2);
         SetXY(px, py);
-
-        SetScaleXY(xScale, yScale);
     }
 }
 

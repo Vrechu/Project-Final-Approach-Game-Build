@@ -8,12 +8,15 @@ using TiledMapParser;
 class Level : GameObject
 {
     private Map levelData;
-    private float _rowLength = 64;
-    private float _columnLength = 64;
+    private float _sideLength = 64;
+    private float _widthOffset = 200;
+    private float _heightOffset = 100;
 
     public Level(string fileName) : base()
     {
         levelData = MapParser.ReadMap(fileName);
+        _heightOffset += _sideLength / 2;
+        _widthOffset += _sideLength / 2;
         spawnTiles(levelData);
     }
 
@@ -42,7 +45,7 @@ class Level : GameObject
                             break;
                         }
 
-                    case 69:
+                    case 71:
                         {
                             PlaceSkull(column, row);
                             break;
@@ -57,9 +60,9 @@ class Level : GameObject
                             PlaceMovingWall(column, row);
                             break;
                         }
-                    case 2:
+                    case 101:
                         {
-
+                            PlaceLegs(column, row);
                             break;
                         }
                 }
@@ -67,24 +70,29 @@ class Level : GameObject
         }
     }
 
-    private void PlaceStationaryWall(float _column, float _row)
+    private void PlaceStationaryWall(float column, float row)
     {
-        AddChild(new StationaryWall("square.png", _column * _columnLength, _row * _rowLength, 1, 1));
+        AddChild(new StationaryWall("square.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
-    private void PlaceSkull(float _column, float _row)
+    private void PlaceSkull(float column, float row)
     {
-        AddChild(new Skull(_column * _columnLength, _row * _rowLength));
+        AddChild(new Skull(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
-    private void PlaceSpike(float _column, float _row)
+    private void PlaceSpike(float column, float row)
     {
-        AddChild(new Spike(_column, _row, 270));
+        AddChild(new Spike(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset, 270));
     }
 
-    private void PlaceMovingWall(float _column, float _row)
+    private void PlaceMovingWall(float column, float row)
     {
-        AddChild(new MovingWall(_column, _row));
+        AddChild(new MovingWall("colors.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+    }
+
+    private void PlaceLegs(float column, float row)
+    {
+        AddChild(new Legs(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 }
 
