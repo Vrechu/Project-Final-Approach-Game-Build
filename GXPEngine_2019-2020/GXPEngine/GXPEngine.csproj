@@ -37,6 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Button.cs" />
+    <Compile Include="Goal.cs" />
+    <Compile Include="InteractionHitbox.cs" />
     <Compile Include="SolidObjects\MovingWall.cs" />
     <Compile Include="SolidObjects\SolidObject.cs" />
     <Compile Include="SolidObjects\StationaryWall.cs" />

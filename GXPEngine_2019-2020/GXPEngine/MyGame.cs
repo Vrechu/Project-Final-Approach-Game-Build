@@ -33,15 +33,22 @@ public class MyGame : Game
 	public MyGame() : base(1920, 1080, false)
 	{
 		Button.OnButtonClicked += SwitchScreen;
-		SwitchScreen(ScreenState.MENU);
-		Skull.OnDeath += Reset;
+		InteractionHitbox.OnDeath += ResetGravity;
+		InteractionHitbox.OnDeath += ResetCurrentLevel;
+		Level.OnLevelStart += ResetGravity;
+		Level.OnLevelFinished += SwitchScreen;
 
+		SwitchScreen(ScreenState.MENU);
 		SetGravityDirection(GravityDirection.DOWN);
 	}
 
 	private void OnDestroy()
     {
-		Skull.OnDeath -= Reset;
+		Button.OnButtonClicked -= SwitchScreen;
+		InteractionHitbox.OnDeath -= ResetGravity;
+		InteractionHitbox.OnDeath -= ResetCurrentLevel;
+		Level.OnLevelStart -= ResetGravity;
+		Level.OnLevelFinished -= SwitchScreen;
 	}
 
     void Update()
@@ -139,7 +146,7 @@ public class MyGame : Game
 	/// <summary>
 	/// returns the gravity to down and resets the cooldown
 	/// </summary>
-	private void Reset()
+	private void ResetGravity()
     {
 		SetGravityDirection(GravityDirection.DOWN);
 		canSwitchGravity = false;
@@ -161,7 +168,7 @@ public class MyGame : Game
                 }
 			case ScreenState.LEVEL1:
 				{
-					StartLevel("Tryout2.tmx");
+					StartLevel("Tryout2.tmx", ScreenState.MENU);
 					break;
 				}
 		}
@@ -173,18 +180,17 @@ public class MyGame : Game
 	public void StartMenu()
     {
 		ClosePreviousScreen();
-		AddChild(new Menu(width/2, height/2));
+		LateAddChild(new Menu(width/2, height/2));
 	}
 
 	/// <summary>
 	/// closes any window and starts the selected level
 	/// </summary>
 	/// <param name="levelName"> file name of level</param>
-	public void StartLevel(string levelName)
+	public void StartLevel(string levelName, ScreenState nextScreen)
     {
         ClosePreviousScreen();
-        AddChild(new Level(levelName));
-
+        LateAddChild(new Level(levelName, nextScreen));
     }
 
     /// <summary>
@@ -201,5 +207,11 @@ public class MyGame : Game
 			level.LateDestroy();
 		}
 	}
+
+	private void ResetCurrentLevel()
+    {
+		SwitchScreen(_screenState);
+    }
+		
 		
 }

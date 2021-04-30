@@ -7,17 +7,34 @@ using TiledMapParser;
 
 class Level : GameObject
 {
+    public static event Action<MyGame.ScreenState> OnLevelFinished;
+    public static event Action OnLevelStart;
+
+    private MyGame.ScreenState _nextScreen;
     private Map levelData;
     private float _sideLength = 64;
     private float _widthOffset = 200;
     private float _heightOffset = 100;
 
-    public Level(string fileName) : base()
+    public Level(string fileName, MyGame.ScreenState nextScreen) : base()
     {
+        InteractionHitbox.OnGoalReached += NextScreen;
+        _nextScreen = nextScreen;
         levelData = MapParser.ReadMap(fileName);
         _heightOffset += _sideLength / 2;
         _widthOffset += _sideLength / 2;
+        OnLevelStart?.Invoke();
         spawnTiles(levelData);
+    }
+
+    private void OnDestroy()
+    {
+        InteractionHitbox.OnGoalReached -= NextScreen;
+    }
+
+    private void NextScreen()
+    {
+        OnLevelFinished?.Invoke(_nextScreen);
     }
 
     private void spawnTiles(Map leveldata)
@@ -65,6 +82,11 @@ class Level : GameObject
                             PlaceLegs(column, row);
                             break;
                         }
+                    case 34:
+                        {
+                            PlaceGoal(column, row);
+                            break;
+                        }
                 }
             }
         }
@@ -93,6 +115,11 @@ class Level : GameObject
     private void PlaceLegs(float column, float row)
     {
         AddChild(new Legs(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+    }
+
+    private void PlaceGoal(float column, float row)
+    {
+        AddChild(new Goal(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 }
 
