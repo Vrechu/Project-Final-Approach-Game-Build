@@ -6,9 +6,8 @@ using GXPEngine;
 
 class Menu : Sprite
 {
-    public Menu(float px, float py) : base("square.png")
+    public Menu() : base("square.png")
     {
-        SetXY(px, py);
-        AddChild(new Button("Play_Game.png", width / 2, height / 2, MyGame.ScreenState.LEVEL1));
+        AddChild(new Button("Play_Game.png", width / 2, height / 2, MyGame.ScreenState.COMIC1));
     }
 }

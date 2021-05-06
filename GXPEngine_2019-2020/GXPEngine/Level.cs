@@ -24,7 +24,7 @@ class Level : GameObject
         _heightOffset += _sideLength / 2;
         _widthOffset += _sideLength / 2;
         OnLevelStart?.Invoke();
-        spawnTiles(levelData);
+        SpawnTiles(levelData);
     }
 
     private void OnDestroy()
@@ -37,7 +37,7 @@ class Level : GameObject
         OnLevelFinished?.Invoke(_nextScreen);
     }
 
-    private void spawnTiles(Map leveldata)
+    private void SpawnTiles(Map leveldata)
     {
         if (leveldata.Layers == null
             || leveldata.Layers.Length == 0) //nullcheck
