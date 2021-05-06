@@ -13,13 +13,11 @@ class Skull : SolidObject
     private bool isGrounded = false;
     private bool canWalk = false;
 
-    private InteractionHitbox _hitbox;
-
     public Skull(float px, float py) : base("triangle.png", px, py)
     {
         SetXY(px, py);
         SetScaleXY(0.95f, 1);
-        AddChild(_hitbox = new InteractionHitbox(this));
+        AddChild(new InteractionHitbox());
 
         MyGame.OnGravitySwitch += RotateSkull;
         InteractionHitbox.OnLegsPickup += PickupLegs;
@@ -32,7 +30,7 @@ class Skull : SolidObject
         Walk();
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateSkull;
         InteractionHitbox.OnLegsPickup -= PickupLegs;

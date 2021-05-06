@@ -4,6 +4,8 @@ using GXPEngine;                                // GXPEngine contains the engine
 
 public class MyGame : Game
 {
+	private int called;
+
 	public enum ScreenState
 	{
 		MENU, LEVEL1, LEVEL2, LEVEL3, COMIC1, COMIC2, COMIC3
@@ -26,7 +28,7 @@ public class MyGame : Game
 	private Vec2 _leftGravityVec = new Vec2(-1, 0).Normalized();
 	private Vec2 _rightGravityVec = new Vec2(1, 0).Normalized();
 
-	private float _gravitySwitchCooldownTime = 3; //Cooldown timer in seconds
+	private float _gravitySwitchCooldownTime = 1; //Cooldown timer in seconds
 	private bool canSwitchGravity = true;
 	private float oldTime = Time.time;
 
@@ -42,7 +44,7 @@ public class MyGame : Game
 		SetGravityDirection(GravityDirection.DOWN);
 	}
 
-	private void OnDestroy()
+	protected override void OnDestroy()
 	{
 		Button.OnButtonClicked -= SwitchScreen;
 		InteractionHitbox.OnDeath -= ResetGravity;
@@ -54,8 +56,7 @@ public class MyGame : Game
 	void Update()
 	{
 		GravityInputs();
-		GravitySwitchCooldown();
-		Console.WriteLine(gravityDirection);
+		GravitySwitchCooldown();		
 	}
 
 	static void Main()                          // Main() is the first method that's called when the program is run
@@ -178,6 +179,9 @@ public class MyGame : Game
 					break;
 				}
 		}
+
+		called++; // remove
+		Console.WriteLine(Time.time + "ms, called:  " + called); // remove
 	}     
 
 	/// <summary>
@@ -227,7 +231,5 @@ public class MyGame : Game
 	private void ResetCurrentLevel()
     {
 		SwitchScreen(_screenState);
-    }
-		
-		
+    }		
 }

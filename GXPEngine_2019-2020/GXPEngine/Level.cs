@@ -27,7 +27,7 @@ class Level : GameObject
         SpawnTiles(levelData);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
         InteractionHitbox.OnGoalReached -= NextScreen;
     }
