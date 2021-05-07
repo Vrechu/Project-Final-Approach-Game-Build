@@ -41,6 +41,8 @@
     <Compile Include="DialogueWindow.cs" />
     <Compile Include="Goal.cs" />
     <Compile Include="InteractionHitbox.cs" />
+    <Compile Include="PortalIn.cs" />
+    <Compile Include="PortalOut.cs" />
     <Compile Include="SolidObjects\MovingSpike.cs" />
     <Compile Include="SolidObjects\MovingWall.cs" />
     <Compile Include="SolidObjects\SolidObject.cs" />

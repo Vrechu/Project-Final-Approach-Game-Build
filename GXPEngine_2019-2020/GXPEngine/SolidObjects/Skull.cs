@@ -13,7 +13,7 @@ class Skull : SolidObject
     private bool isGrounded = false;
     private bool canWalk = false;
 
-    public Skull(float px, float py) : base("triangle.png", px, py)
+    public Skull(float px, float py) : base("skull.png", px, py)
     {
         SetXY(px, py);
         SetScaleXY(0.95f, 1);

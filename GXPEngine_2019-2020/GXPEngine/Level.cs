@@ -114,7 +114,7 @@ class Level : GameObject
 
     private void PlaceMovingWall(float column, float row)
     {
-        AddChild(new MovingWall("colors.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+        AddChild(new MovingWall("moving_wall.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
     private void PlaceLegs(float column, float row)
@@ -129,7 +129,7 @@ class Level : GameObject
 
     private void PlaceMovingSpike(float column, float row)
     {
-        AddChild(new MovingSpike("colors.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+        AddChild(new MovingSpike("moving_spikes.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 }
 

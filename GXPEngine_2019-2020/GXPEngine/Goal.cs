@@ -6,7 +6,7 @@ using GXPEngine;
 
 class Goal : Sprite
 {
-    public Goal(float px, float py) : base("circle.png")
+    public Goal(float px, float py) : base("goal.png")
     {
         SetXY(px, py);
         SetOrigin(width / 2, height / 2);

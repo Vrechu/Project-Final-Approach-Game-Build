@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using GXPEngine;
 
-class PortalIn : Sprite
+class PortalOut : Sprite
 {
-    public PortalIn(float px, float py) : base("portal_in.png")
+    public PortalOut(float px, float py) : base("portal_out.png")
     {
         SetXY(px, py);
         SetOrigin(width / 2, height / 2);

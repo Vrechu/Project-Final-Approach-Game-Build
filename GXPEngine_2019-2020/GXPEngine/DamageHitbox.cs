@@ -6,12 +6,11 @@ using GXPEngine;
 
 class DamageHitbox : Sprite
 {
-    private float _hitboxOffset = 6;
     public DamageHitbox() : base("square.png")
     {
         SetOrigin(width / 2, height / 2);
         alpha = 0;
-        y = _hitboxOffset;
+        SetScaleXY(1, 1.2f);
     }
 }
 

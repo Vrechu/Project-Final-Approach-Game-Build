@@ -10,7 +10,7 @@ class MovingSpike : SolidObject
     private Vec2 _gravityVelocity;
     public MovingSpike(string SpriteImage, float px, float py) : base(SpriteImage, px, py)
     {
-        SetScaleXY(0.95f, 1);
+        SetScaleXY(0.85f, 0.90f);
         MyGame.OnGravitySwitch += RotateWall;
         AddChild(new DamageHitbox());
     }
