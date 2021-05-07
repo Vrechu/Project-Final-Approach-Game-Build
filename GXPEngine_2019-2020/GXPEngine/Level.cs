@@ -92,6 +92,17 @@ class Level : GameObject
                             PlaceMovingSpike(column, row);
                             break;
                         }
+
+                    case 36:
+                        {
+                            PlacePortalIn(column, row);
+                            break;
+                        }
+                    case 37:
+                        {
+                            PlacePortalOut(column, row);
+                            break;
+                        }
                 }
             }
         }
@@ -131,5 +142,16 @@ class Level : GameObject
     {
         AddChild(new MovingSpike("moving_spikes.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
+
+    private void PlacePortalIn(float column, float row)
+    {
+        AddChild(new PortalIn(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+    }
+
+    private void PlacePortalOut(float column, float row)
+    {
+        AddChild(new PortalOut(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+    }
+        
 }
 

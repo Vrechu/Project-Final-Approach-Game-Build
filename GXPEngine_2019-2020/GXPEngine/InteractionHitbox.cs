@@ -9,6 +9,9 @@ class InteractionHitbox : Sprite
     public static event Action OnDeath;
     public static event Action OnLegsPickup;
     public static event Action OnGoalReached;
+    public static event Action OnPortalInHit;
+    public static event Action OnPortalOutHit;
+
     private float _hitboxOffset = 5;
     public InteractionHitbox() : base("square.png")
     {
@@ -31,6 +34,14 @@ class InteractionHitbox : Sprite
         else if (other is Goal)
         {
             OnGoalReached?.Invoke();
+        }
+        else if (other is PortalIn)
+        {
+            OnPortalInHit?.Invoke();
+        }
+        else if (other is PortalOut)
+        {
+            OnPortalOutHit?.Invoke();
         }
     }
 }

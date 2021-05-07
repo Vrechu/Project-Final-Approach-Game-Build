@@ -13,6 +13,10 @@ class Skull : SolidObject
     private bool isGrounded = false;
     private bool canWalk = false;
 
+    private float _teleportCooldownTime = 1;
+    private float oldTime = Time.time;
+    private bool canTeleport = true;
+
     public Skull(float px, float py) : base("skull.png", px, py)
     {
         SetXY(px, py);
@@ -21,6 +25,16 @@ class Skull : SolidObject
 
         MyGame.OnGravitySwitch += RotateSkull;
         InteractionHitbox.OnLegsPickup += PickupLegs;
+        InteractionHitbox.OnPortalInHit += MoveToPortalOut;
+        InteractionHitbox.OnPortalOutHit += MoveToPortalIn;
+    }
+
+    protected override void OnDestroy()
+    {
+        MyGame.OnGravitySwitch -= RotateSkull;
+        InteractionHitbox.OnLegsPickup -= PickupLegs;
+        InteractionHitbox.OnPortalInHit -= MoveToPortalOut;
+        InteractionHitbox.OnPortalOutHit -= MoveToPortalIn;
     }
 
     private void Update()
@@ -28,13 +42,9 @@ class Skull : SolidObject
         MoveSkull();
         CheckIfGounded();
         Walk();
+        TeleportCooldown();
     }
 
-    protected override void OnDestroy()
-    {
-        MyGame.OnGravitySwitch -= RotateSkull;
-        InteractionHitbox.OnLegsPickup -= PickupLegs;
-    }
 
     /// <summary>
     /// Moves the skull into the gravity direction and detects wether the skull is grounded
@@ -119,5 +129,36 @@ class Skull : SolidObject
     private void PickupLegs()
     {
         canWalk = true;
+    }
+
+    private void MoveToPortalOut()
+    {
+        if (canTeleport)
+        {
+            canTeleport = false;
+            SetXY(game.FindObjectOfType<PortalOut>().x, game.FindObjectOfType<PortalOut>().y);
+        }
+    }
+    private void MoveToPortalIn()
+    {
+        if (canTeleport)
+        {
+            canTeleport = false;
+            SetXY(game.FindObjectOfType<PortalIn>().x, game.FindObjectOfType<PortalIn>().y);
+        }
+    }
+
+    private void TeleportCooldown()
+    {
+        if (!canTeleport)
+        {
+            oldTime -= Time.deltaTime;
+        }
+
+        if (oldTime < 0)
+        {
+            canTeleport = true;
+            oldTime = _teleportCooldownTime * 1000;
+        }
     }
 }

@@ -4,8 +4,6 @@ using GXPEngine;                                // GXPEngine contains the engine
 
 public class MyGame : Game
 {
-	private int called;
-
 	public enum ScreenState
 	{
 		MENU, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, COMIC1, COMIC2, COMIC3, COMIC4
@@ -225,7 +223,7 @@ public class MyGame : Game
 				}
                 #endregion
         }
-    }     
+	}     
 
 	/// <summary>
 	/// closes any window and starts the menu
@@ -257,15 +255,15 @@ public class MyGame : Game
 	/// </summary>
 	private void ClosePreviousScreen()
 	{
-		foreach (Menu menu in FindObjectsOfType<Menu>())
+		foreach (Menu menu in game.FindObjectsOfType<Menu>())
 		{
 			menu.LateDestroy();
 		}
-		foreach (Level level in FindObjectsOfType<Level>())
+		foreach (Level level in game.FindObjectsOfType<Level>())
 		{
 			level.LateDestroy();
 		}
-		foreach (DialogueWindow dialogueWindow in FindObjectsOfType<DialogueWindow>())
+		foreach (DialogueWindow dialogueWindow in game.FindObjectsOfType<DialogueWindow>())
 		{
 			dialogueWindow.LateDestroy();
 		}
@@ -274,5 +272,5 @@ public class MyGame : Game
 	private void ResetCurrentLevel()
     {
 		SwitchScreen(_screenState);
-    }		
+    }
 }
