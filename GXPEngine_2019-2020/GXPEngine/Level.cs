@@ -87,6 +87,11 @@ class Level : GameObject
                             PlaceGoal(column, row);
                             break;
                         }
+                    case 35:
+                        {
+                            PlaceMovingSpike(column, row);
+                            break;
+                        }
                 }
             }
         }
@@ -120,6 +125,11 @@ class Level : GameObject
     private void PlaceGoal(float column, float row)
     {
         AddChild(new Goal(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+    }
+
+    private void PlaceMovingSpike(float column, float row)
+    {
+        AddChild(new MovingSpike("colors.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 }
 

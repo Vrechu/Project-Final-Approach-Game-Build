@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using GXPEngine;
 
-class MovingWall : SolidObject
+class MovingSpike : SolidObject
 {
     private float _speed = 0;
     private Vec2 _gravityVelocity;
-    public MovingWall(string SpriteImage, float px, float py) : base(SpriteImage , px, py)
+    public MovingSpike(string SpriteImage, float px, float py) : base(SpriteImage, px, py)
     {
         SetScaleXY(0.95f, 1);
         MyGame.OnGravitySwitch += RotateWall;
+        AddChild(new DamageHitbox());
     }
 
     private void OnDestroy()
@@ -37,7 +38,7 @@ class MovingWall : SolidObject
     }
 
     /// <summary>
-    /// Rotates the wall depending on the gravity direction
+    /// Rotates the spike depending on the gravity direction
     /// </summary>
     private void RotateWall()
     {

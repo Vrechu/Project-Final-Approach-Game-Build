@@ -11,6 +11,7 @@ class Spike : SolidObject
         SetOrigin(width / 2, height / 2);
         SetXY(px, py);
         rotation = pRotation;
+        AddChild(new DamageHitbox());
     }
 }
 

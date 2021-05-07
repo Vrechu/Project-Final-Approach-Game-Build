@@ -8,7 +8,7 @@ public class MyGame : Game
 
 	public enum ScreenState
 	{
-		MENU, LEVEL1, LEVEL2, LEVEL3, COMIC1, COMIC2, COMIC3
+		MENU, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, COMIC1, COMIC2, COMIC3, COMIC4
 	}
 	public ScreenState _screenState;
 
@@ -28,7 +28,7 @@ public class MyGame : Game
 	private Vec2 _leftGravityVec = new Vec2(-1, 0).Normalized();
 	private Vec2 _rightGravityVec = new Vec2(1, 0).Normalized();
 
-	private float _gravitySwitchCooldownTime = 1; //Cooldown timer in seconds
+	private float _gravitySwitchCooldownTime = 2f; //Cooldown timer in seconds
 	private bool canSwitchGravity = true;
 	private float oldTime = Time.time;
 
@@ -168,21 +168,64 @@ public class MyGame : Game
 					StartMenu();
 					break;
 				}
-			case ScreenState.LEVEL1:
+
+            #region Levels
+            case ScreenState.LEVEL1:
 				{
-					StartLevel("Tryout3.tmx", ScreenState.MENU);
+					StartLevel("Tryout3.tmx", ScreenState.LEVEL2);
 					break;
 				}
-			case ScreenState.COMIC1:
+			case ScreenState.LEVEL2:
+				{
+					StartLevel("Tryout3.tmx", ScreenState.COMIC2);
+					break;
+				}
+			case ScreenState.LEVEL3:
+				{
+					StartLevel("Tryout3.tmx", ScreenState.LEVEL4);
+					break;
+				}
+			case ScreenState.LEVEL4:
+				{
+					StartLevel("Tryout3.tmx", ScreenState.COMIC3);
+					break;
+				}
+			case ScreenState.LEVEL5:
+				{
+					StartLevel("Tryout3.tmx", ScreenState.LEVEL6);
+					break;
+				}
+			case ScreenState.LEVEL6:
+				{
+					StartLevel("Tryout3.tmx", ScreenState.COMIC4);
+					break;
+				}
+            #endregion
+
+            #region comic panels
+            case ScreenState.COMIC1:
 				{
 					StartDialogueWindow("colors.png", ScreenState.LEVEL1);
 					break;
 				}
-		}
-
-		called++; // remove
-		Console.WriteLine(Time.time + "ms, called:  " + called); // remove
-	}     
+			case ScreenState.COMIC2:
+				{
+					StartDialogueWindow("colors.png", ScreenState.LEVEL3);
+					break;
+				}
+			case ScreenState.COMIC3:
+				{
+					StartDialogueWindow("colors.png", ScreenState.LEVEL5);
+					break;
+				}
+			case ScreenState.COMIC4:
+				{
+					StartDialogueWindow("colors.png", ScreenState.MENU);
+					break;
+				}
+                #endregion
+        }
+    }     
 
 	/// <summary>
 	/// closes any window and starts the menu
