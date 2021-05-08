@@ -14,7 +14,7 @@ class Skull : SolidObject
     private bool canWalk = false;
 
     private float _teleportCooldownTime = 1;
-    private float oldTime = Time.time;
+    private float oldTime = -1;
     private bool canTeleport = true;
 
     public Skull(float px, float py) : base("skull.png", px, py)
@@ -43,6 +43,7 @@ class Skull : SolidObject
         CheckIfGounded();
         Walk();
         TeleportCooldown();
+        Console.WriteLine(oldTime);
     }
 
 
