@@ -8,7 +8,7 @@ class MovingWall : SolidObject
 {
     private float _speed = 0;
     private Vec2 _gravityVelocity;
-    public MovingWall(string SpriteImage, float px, float py) : base(SpriteImage , px, py)
+    public MovingWall(string SpriteImage, float px, float py) : base(SpriteImage ,1, 1 , px, py)
     {
         SetScaleXY(0.95f, 1);
         MyGame.OnGravitySwitch += RotateWall;

@@ -44,9 +44,9 @@
     <Compile Include="InteractionObjects\PortalIn.cs" />
     <Compile Include="InteractionObjects\PortalOut.cs" />
     <Compile Include="DamageObjects\MovingSpike.cs" />
-    <Compile Include="SolidObjects\MovingWall.cs" />
-    <Compile Include="SolidObjects\SolidObject.cs" />
-    <Compile Include="SolidObjects\StationaryWall.cs" />
+    <Compile Include="Walls\MovingWall.cs" />
+    <Compile Include="SolidObject.cs" />
+    <Compile Include="Walls\StationaryWall.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="InteractionObjects\Legs.cs" />
     <Compile Include="Level.cs" />

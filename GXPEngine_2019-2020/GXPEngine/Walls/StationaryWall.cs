@@ -6,7 +6,7 @@ using GXPEngine;
 
 class StationaryWall : SolidObject
 {
-    public StationaryWall(string spriteImage, float px, float py) : base(spriteImage, px, py)
+    public StationaryWall(string spriteImage, float px, float py) : base(spriteImage,1,1, px, py)
     {
 
     }

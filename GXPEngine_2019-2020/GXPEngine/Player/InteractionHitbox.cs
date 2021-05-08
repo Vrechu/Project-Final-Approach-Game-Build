@@ -12,12 +12,13 @@ class InteractionHitbox : Sprite
     public static event Action OnPortalInHit;
     public static event Action OnPortalOutHit;
 
-    private float _hitboxOffset = 5; // offset of the hitbox. slighty below the main class to not conflict with the moveuntilcollision
+    private float _offset = 2f; // offset of the hitbox. slighty below the main class to not conflict with the moveuntilcollision
     public InteractionHitbox() : base("square.png")
     {
         SetOrigin(width / 2, height / 2);
         alpha = 0;
-        y = _hitboxOffset;
+        SetScaleXY(1, 1 + _offset / 64);
+        SetXY(1, _offset);
     }
 
     //sends out different events depending on which interaction object the hitbox collides with 
