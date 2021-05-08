@@ -6,7 +6,7 @@ public class MyGame : Game
 {
 	public enum ScreenState
 	{
-		MENU, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, COMIC1, COMIC2, COMIC3, COMIC4
+		MENU, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, COMIC1, COMIC2, COMIC3, COMIC4, INTRO, CREDITS
 	}
 	public ScreenState _screenState;
 
@@ -16,9 +16,9 @@ public class MyGame : Game
 	{
 		UP, DOWN, LEFT, RIGHT
 	}
-	public static GravityDirection gravityDirection;
+	private static GravityDirection gravityDirection;
 
-	public static event Action OnGravitySwitch;
+	public static event Action<GravityDirection> OnGravitySwitch;
 
 	public static float GravityAccaleration = 0.2f; // Rate of acceleration
 	public static Vec2 GravityVector = new Vec2();
@@ -76,41 +76,53 @@ public class MyGame : Game
 			_screenState = screenState;
 			switch (screenState)
 			{
-				case ScreenState.MENU:
+                #region menu
+                case ScreenState.MENU:
 					{
 						StartMenu();
 						break;
 					}
+				case ScreenState.INTRO:
+					{
+						StartDialogueWindow("placeholder_tutorial.png", ScreenState.MENU);
+						break;
+					}
+				case ScreenState.CREDITS:
+					{
+						StartDialogueWindow("placeholder_credits.png", ScreenState.MENU);
+						break;
+					}
+				#endregion
 
-				#region Levels
+				#region levels
 				case ScreenState.LEVEL1:
 					{
-						StartLevel("Tryout2.tmx", ScreenState.LEVEL2);
+						StartLevel("Tryout4.tmx", "placeholder_level.png",  ScreenState.LEVEL2);
 						break;
 					}
 				case ScreenState.LEVEL2:
 					{
-						StartLevel("Tryout3.tmx", ScreenState.COMIC2);
+						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.COMIC2);
 						break;
 					}
 				case ScreenState.LEVEL3:
 					{
-						StartLevel("Tryout3.tmx", ScreenState.LEVEL4);
+						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.LEVEL4);
 						break;
 					}
 				case ScreenState.LEVEL4:
 					{
-						StartLevel("Tryout3.tmx", ScreenState.COMIC3);
+						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.COMIC3);
 						break;
 					}
 				case ScreenState.LEVEL5:
 					{
-						StartLevel("Tryout3.tmx", ScreenState.LEVEL6);
+						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.LEVEL6);
 						break;
 					}
 				case ScreenState.LEVEL6:
 					{
-						StartLevel("Tryout3.tmx", ScreenState.COMIC4);
+						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.COMIC4);
 						break;
 					}
 				#endregion
@@ -118,22 +130,22 @@ public class MyGame : Game
 				#region comic panels
 				case ScreenState.COMIC1:
 					{
-						StartDialogueWindow("colors.png", ScreenState.LEVEL1);
+						StartDialogueWindow("placeholder_comic.png", ScreenState.LEVEL1);
 						break;
 					}
 				case ScreenState.COMIC2:
 					{
-						StartDialogueWindow("colors.png", ScreenState.LEVEL3);
+						StartDialogueWindow("placeholder_comic.png", ScreenState.LEVEL3);
 						break;
 					}
 				case ScreenState.COMIC3:
 					{
-						StartDialogueWindow("colors.png", ScreenState.LEVEL5);
+						StartDialogueWindow("placeholder_comic.png", ScreenState.LEVEL5);
 						break;
 					}
 				case ScreenState.COMIC4:
 					{
-						StartDialogueWindow("colors.png", ScreenState.MENU);
+						StartDialogueWindow("placeholder_comic.png", ScreenState.CREDITS);
 						break;
 					}
 					#endregion
@@ -154,10 +166,10 @@ public class MyGame : Game
 	/// closes any window and starts the selected level
 	/// </summary>
 	/// <param name="levelName"> file name of level</param>
-	private void StartLevel(string levelName, ScreenState nextScreen)
+	private void StartLevel(string levelName, string background, ScreenState nextScreen)
     {
         ClosePreviousScreen();
-        LateAddChild(new Level(levelName, nextScreen));
+        LateAddChild(new Level(levelName,background, nextScreen));
     }
 
 	private void StartDialogueWindow(string screenimage, ScreenState nextScreen)
@@ -216,7 +228,6 @@ public class MyGame : Game
 			{
 				SetGravityDirection(GravityDirection.RIGHT);
 			}
-			OnGravitySwitch?.Invoke();
 		}
 	}
 
@@ -224,7 +235,7 @@ public class MyGame : Game
 	/// Sets the gravity vector in the specified direction
 	/// </summary>
 	/// <param name="direction">the direction that the gravity should switch to </param>
-	public void SetGravityDirection(GravityDirection direction)
+	private void SetGravityDirection(GravityDirection direction)
 	{
 		gravityDirection = direction;
 		canSwitchGravity = false;
@@ -255,6 +266,7 @@ public class MyGame : Game
 					break;
 				}
 		}
+		OnGravitySwitch?.Invoke(gravityDirection);
 	}
 
 	/// <summary>

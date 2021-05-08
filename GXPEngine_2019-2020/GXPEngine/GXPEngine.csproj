@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GravityHUD.cs" />
     <Compile Include="Menu\Button.cs" />
     <Compile Include="DamageObjects\DamageHitbox.cs" />
     <Compile Include="Menu\DialogueWindow.cs" />

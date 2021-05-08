@@ -40,9 +40,9 @@ class MovingSpike : SolidObject
     /// <summary>
     /// Rotates the spike depending on the gravity direction
     /// </summary>
-    private void RotateWall()
+    private void RotateWall(MyGame.GravityDirection gravityDirection)
     {
-        switch (MyGame.gravityDirection)
+        switch (gravityDirection)
         {
             case MyGame.GravityDirection.UP:
                 {

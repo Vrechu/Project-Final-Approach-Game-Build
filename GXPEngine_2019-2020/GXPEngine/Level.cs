@@ -16,15 +16,17 @@ class Level : GameObject
     private float _widthOffset = 200;
     private float _heightOffset = 100;
 
-    public Level(string fileName, MyGame.ScreenState nextScreen) : base()
+    public Level(string levelFileName,string backgroundFileName, MyGame.ScreenState nextScreen) : base()
     {
         InteractionHitbox.OnGoalReached += NextScreen;
         _nextScreen = nextScreen;
-        levelData = MapParser.ReadMap(fileName);
+        levelData = MapParser.ReadMap(levelFileName);
         _heightOffset += _sideLength / 2;
         _widthOffset += _sideLength / 2;
         OnLevelStart?.Invoke();
+        AddChild(new Sprite(backgroundFileName));
         SpawnTiles(levelData);
+        AddChild(new GravityHUD(game.width/2, 800));
     }
 
     protected override void OnDestroy()
@@ -43,66 +45,179 @@ class Level : GameObject
     /// <param name="leveldata"></param>
     private void SpawnTiles(Map leveldata)
     {
-        if (leveldata.Layers == null
-            || leveldata.Layers.Length == 0) //nullcheck
+        if (leveldata.Layers == null    //nullcheck
+            || leveldata.Layers.Length == 0) 
         {
-            return;
+            return;  
         }
-
         Layer mainLayer = leveldata.Layers[0];
         short[,] tileNumbers = mainLayer.GetTileArray(); //get arraylist from tiled file
-
+        
         for (int row = 0; row < mainLayer.Height; row++)
         {
             for (int column = 0; column < mainLayer.Width; column++)
             {
                 int tileNumber = tileNumbers[column, row]; //assign row and column numbers
-
                 switch (tileNumber)
                 {
+                    #region stationary walls
                     case 33:
                         {
-                            PlaceStationaryWall(column, row);
-                            break;
-                        }
-
-                    case 71:
-                        {
-                            PlaceSkull(column, row);
-                            break;
-                        }
-                    case 70:
-                        {
-                            PlaceSpike(column, row);
-                            break;
-                        }
-                    case 100:
-                        {
-                            PlaceMovingWall(column, row);
-                            break;
-                        }
-                    case 101:
-                        {
-                            PlaceLegs(column, row);
+                            PlaceStationaryWall(column, row, tileNumber);
                             break;
                         }
                     case 34:
                         {
-                            PlaceGoal(column, row);
+                            PlaceStationaryWall(column, row, tileNumber);
                             break;
                         }
                     case 35:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 36:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 37:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 38:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 63:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 93:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 123:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 153:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 183:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 184:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 185:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 186:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 187:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 188:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 68:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 98:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 128:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    case 158:
+                        {
+                            PlaceStationaryWall(column, row, tileNumber);
+                            break;
+                        }
+                    #endregion
+
+                    #region stationary spikes
+                    case 243:
+                        {
+                            PlaceSpike(column, row, 0);
+                            break;
+                        }
+                    case 244:
+                        {
+                            PlaceSpike(column, row, 180);
+                            break;
+                        }
+                    case 245:
+                        {
+                            PlaceSpike(column, row, 270);
+                            break;
+                        }
+                    case 246:
+                        {
+                            PlaceSpike(column, row, 90);
+                            break;
+                        }
+                    #endregion
+
+                    case 215:
+                        {
+                            PlaceSkull(column, row);
+                            break;
+                        }
+                    case 218:
+                        {
+                            PlaceMovingWall(column, row);
+                            break;
+                        }
+                    case 217:
+                        {
+                            PlaceLegs(column, row);
+                            break;
+                        }
+                    case 216:
+                        {
+                            PlaceGoal(column, row);
+                            break;
+                        }
+                    case 247:
                         {
                             PlaceMovingSpike(column, row);
                             break;
                         }
 
-                    case 36:
+                    case 213:
                         {
                             PlacePortalIn(column, row);
                             break;
                         }
-                    case 37:
+                    case 214:
                         {
                             PlacePortalOut(column, row);
                             break;
@@ -112,9 +227,9 @@ class Level : GameObject
         }
     }
 
-    private void PlaceStationaryWall(float column, float row)
+    private void PlaceStationaryWall(float column, float row, int frame)
     {
-        AddChild(new StationaryWall("square.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+        AddChild(new StationaryWall(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset, frame -1));
     }
 
     private void PlaceSkull(float column, float row)
@@ -122,9 +237,9 @@ class Level : GameObject
         AddChild(new Skull(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
-    private void PlaceSpike(float column, float row)
+    private void PlaceSpike(float column, float row, int spikeRotation)
     {
-        AddChild(new Spike(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset, 270));
+        AddChild(new Spike(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset, spikeRotation));
     }
 
     private void PlaceMovingWall(float column, float row)

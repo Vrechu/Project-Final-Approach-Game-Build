@@ -6,8 +6,9 @@ using GXPEngine;
 
 class StationaryWall : SolidObject
 {
-    public StationaryWall(string spriteImage, float px, float py) : base(spriteImage,1,1, px, py)
+    public StationaryWall(float px, float py, int frame) : base("Tiles_and_portal.png", 30,16, px, py)
     {
-
+        SetFrame(frame);
+        Console.WriteLine("w " + width + "h " + height);
     }
 }

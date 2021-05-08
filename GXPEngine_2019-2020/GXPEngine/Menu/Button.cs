@@ -14,6 +14,7 @@ class Button : AnimationSprite
     {
         SetXY(px, py);
         _nextScreen = nextScreen;
+        SetOrigin(width / 2, height / 2);
     }
 
     private void Update()

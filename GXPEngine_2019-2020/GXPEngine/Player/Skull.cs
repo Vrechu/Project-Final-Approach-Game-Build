@@ -20,7 +20,7 @@ class Skull : SolidObject
     public Skull(float px, float py) : base("skull.png",1, 1, px, py)
     {
         SetXY(px, py);
-        SetScaleXY(0.95f, 1);
+        SetScaleXY(0.95f, 1f);
         AddChild(new InteractionHitbox());
 
         MyGame.OnGravitySwitch += RotateSkull;
@@ -43,7 +43,6 @@ class Skull : SolidObject
         CheckIfGounded();
         Walk();
         TeleportCooldown();
-        Console.WriteLine(oldTime);
     }
 
 
@@ -95,9 +94,9 @@ class Skull : SolidObject
     /// <summary>
     /// Rotates the skull depending on the gravity direction
     /// </summary>
-    private void RotateSkull()
+    private void RotateSkull(MyGame.GravityDirection gravityDirection)
     {
-        switch (MyGame.gravityDirection)
+        switch (gravityDirection)
         {
             case MyGame.GravityDirection.UP:
                 {
