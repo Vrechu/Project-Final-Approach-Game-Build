@@ -6,7 +6,7 @@ using GXPEngine;
 
 class Spike : SolidObject
 {
-    public Spike(float px, float py, float pRotation) : base("triangle.png", px, py)
+    public Spike(float px, float py, float pRotation) : base("triangle.png", 1, 1,px, py)
     {
         SetOrigin(width / 2, height / 2);
         SetXY(px, py);

@@ -17,7 +17,7 @@ class Skull : SolidObject
     private float oldTime = -1;
     private bool canTeleport = true;
 
-    public Skull(float px, float py) : base("skull.png", px, py)
+    public Skull(float px, float py) : base("skull.png",1, 1, px, py)
     {
         SetXY(px, py);
         SetScaleXY(0.95f, 1);

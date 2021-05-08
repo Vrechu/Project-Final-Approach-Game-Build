@@ -10,6 +10,7 @@ public class MyGame : Game
 	}
 	public ScreenState _screenState;
 
+	private bool canSwitchScreen = true;
 
 	public enum GravityDirection
 	{
@@ -50,17 +51,147 @@ public class MyGame : Game
 		Level.OnLevelStart -= ResetGravity;
 		Level.OnLevelFinished -= SwitchScreen;
 	}
-
-	void Update()
-	{
-		GravityInputs();
-		GravitySwitchCooldown();		
-	}
-
 	static void Main()                          // Main() is the first method that's called when the program is run
 	{
 		new MyGame().Start();                   // Create a "MyGame" and start it
 	}
+
+	void Update()
+	{
+		canSwitchScreen = true;
+		GravityInputs();
+		GravitySwitchCooldown();		
+	}
+
+
+	/// <summary>
+	/// selects the determined screenstate and switches the window to it
+	/// </summary>
+	/// <param name="screenState"> screen to switch to</param>
+	public void SwitchScreen(ScreenState screenState)
+	{
+		if (canSwitchScreen)
+		{
+			canSwitchScreen = false;
+			_screenState = screenState;
+			switch (screenState)
+			{
+				case ScreenState.MENU:
+					{
+						StartMenu();
+						break;
+					}
+
+				#region Levels
+				case ScreenState.LEVEL1:
+					{
+						StartLevel("Tryout2.tmx", ScreenState.LEVEL2);
+						break;
+					}
+				case ScreenState.LEVEL2:
+					{
+						StartLevel("Tryout3.tmx", ScreenState.COMIC2);
+						break;
+					}
+				case ScreenState.LEVEL3:
+					{
+						StartLevel("Tryout3.tmx", ScreenState.LEVEL4);
+						break;
+					}
+				case ScreenState.LEVEL4:
+					{
+						StartLevel("Tryout3.tmx", ScreenState.COMIC3);
+						break;
+					}
+				case ScreenState.LEVEL5:
+					{
+						StartLevel("Tryout3.tmx", ScreenState.LEVEL6);
+						break;
+					}
+				case ScreenState.LEVEL6:
+					{
+						StartLevel("Tryout3.tmx", ScreenState.COMIC4);
+						break;
+					}
+				#endregion
+
+				#region comic panels
+				case ScreenState.COMIC1:
+					{
+						StartDialogueWindow("colors.png", ScreenState.LEVEL1);
+						break;
+					}
+				case ScreenState.COMIC2:
+					{
+						StartDialogueWindow("colors.png", ScreenState.LEVEL3);
+						break;
+					}
+				case ScreenState.COMIC3:
+					{
+						StartDialogueWindow("colors.png", ScreenState.LEVEL5);
+						break;
+					}
+				case ScreenState.COMIC4:
+					{
+						StartDialogueWindow("colors.png", ScreenState.MENU);
+						break;
+					}
+					#endregion
+			}
+		}
+	}     
+
+	/// <summary>
+	/// closes any window and starts the menu
+	/// </summary>
+	private void StartMenu()
+    {
+		ClosePreviousScreen();
+		LateAddChild(new Menu());
+	}
+
+	/// <summary>
+	/// closes any window and starts the selected level
+	/// </summary>
+	/// <param name="levelName"> file name of level</param>
+	private void StartLevel(string levelName, ScreenState nextScreen)
+    {
+        ClosePreviousScreen();
+        LateAddChild(new Level(levelName, nextScreen));
+    }
+
+	private void StartDialogueWindow(string screenimage, ScreenState nextScreen)
+    {
+		ClosePreviousScreen();
+		LateAddChild(new DialogueWindow(screenimage, nextScreen));
+	}
+
+	/// <summary>
+	/// destroys the current level or menu screen
+	/// </summary>
+	private void ClosePreviousScreen()
+	{
+		foreach (Menu menu in game.FindObjectsOfType<Menu>())
+		{
+			menu.LateDestroy();
+		}
+		foreach (Level level in game.FindObjectsOfType<Level>())
+		{
+			level.LateDestroy();
+		}
+		foreach (DialogueWindow dialogueWindow in game.FindObjectsOfType<DialogueWindow>())
+		{
+			dialogueWindow.LateDestroy();
+		}
+	}
+
+	/// <summary>
+	/// Stops and creates the current open screen
+	/// </summary>
+	private void ResetCurrentLevel()
+    {
+		SwitchScreen(_screenState);
+    }
 
 	/// <summary>
 	/// Key imputs for switching gravity direction
@@ -152,128 +283,4 @@ public class MyGame : Game
 		canSwitchGravity = false;
 	}
 
-	/// <summary>
-	/// selects the determined screenstate and switches the window to it
-	/// </summary>
-	/// <param name="screenState"> screen to switch to</param>
-	public void SwitchScreen(ScreenState screenState)
-	{
-		_screenState = screenState;
-		switch (screenState)
-		{
-			case ScreenState.MENU:
-				{
-					StartMenu();
-					break;
-				}
-
-            #region Levels
-            case ScreenState.LEVEL1:
-				{
-					StartLevel("Tryout3.tmx", ScreenState.LEVEL2);
-					break;
-				}
-			case ScreenState.LEVEL2:
-				{
-					StartLevel("Tryout3.tmx", ScreenState.COMIC2);
-					break;
-				}
-			case ScreenState.LEVEL3:
-				{
-					StartLevel("Tryout3.tmx", ScreenState.LEVEL4);
-					break;
-				}
-			case ScreenState.LEVEL4:
-				{
-					StartLevel("Tryout3.tmx", ScreenState.COMIC3);
-					break;
-				}
-			case ScreenState.LEVEL5:
-				{
-					StartLevel("Tryout3.tmx", ScreenState.LEVEL6);
-					break;
-				}
-			case ScreenState.LEVEL6:
-				{
-					StartLevel("Tryout3.tmx", ScreenState.COMIC4);
-					break;
-				}
-            #endregion
-
-            #region comic panels
-            case ScreenState.COMIC1:
-				{
-					StartDialogueWindow("colors.png", ScreenState.LEVEL1);
-					break;
-				}
-			case ScreenState.COMIC2:
-				{
-					StartDialogueWindow("colors.png", ScreenState.LEVEL3);
-					break;
-				}
-			case ScreenState.COMIC3:
-				{
-					StartDialogueWindow("colors.png", ScreenState.LEVEL5);
-					break;
-				}
-			case ScreenState.COMIC4:
-				{
-					StartDialogueWindow("colors.png", ScreenState.MENU);
-					break;
-				}
-                #endregion
-        }
-	}     
-
-	/// <summary>
-	/// closes any window and starts the menu
-	/// </summary>
-	private void StartMenu()
-    {
-		ClosePreviousScreen();
-		LateAddChild(new Menu());
-	}
-
-	/// <summary>
-	/// closes any window and starts the selected level
-	/// </summary>
-	/// <param name="levelName"> file name of level</param>
-	private void StartLevel(string levelName, ScreenState nextScreen)
-    {
-        ClosePreviousScreen();
-        LateAddChild(new Level(levelName, nextScreen));
-    }
-
-	private void StartDialogueWindow(string screenimage, ScreenState nextScreen)
-    {
-		ClosePreviousScreen();
-		LateAddChild(new DialogueWindow(screenimage, nextScreen));
-	}
-
-	/// <summary>
-	/// destroys the current level or menu screen
-	/// </summary>
-	private void ClosePreviousScreen()
-	{
-		foreach (Menu menu in game.FindObjectsOfType<Menu>())
-		{
-			menu.LateDestroy();
-		}
-		foreach (Level level in game.FindObjectsOfType<Level>())
-		{
-			level.LateDestroy();
-		}
-		foreach (DialogueWindow dialogueWindow in game.FindObjectsOfType<DialogueWindow>())
-		{
-			dialogueWindow.LateDestroy();
-		}
-	}
-
-	/// <summary>
-	/// Stops and creates the current open screen
-	/// </summary>
-	private void ResetCurrentLevel()
-    {
-		SwitchScreen(_screenState);
-    }
 }
