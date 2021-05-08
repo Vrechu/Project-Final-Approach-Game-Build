@@ -36,21 +36,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button.cs" />
-    <Compile Include="DamageHitbox.cs" />
-    <Compile Include="DialogueWindow.cs" />
-    <Compile Include="Goal.cs" />
-    <Compile Include="InteractionHitbox.cs" />
-    <Compile Include="PortalIn.cs" />
-    <Compile Include="PortalOut.cs" />
-    <Compile Include="SolidObjects\MovingSpike.cs" />
+    <Compile Include="Menu\Button.cs" />
+    <Compile Include="DamageObjects\DamageHitbox.cs" />
+    <Compile Include="Menu\DialogueWindow.cs" />
+    <Compile Include="InteractionObjects\Goal.cs" />
+    <Compile Include="Player\InteractionHitbox.cs" />
+    <Compile Include="InteractionObjects\PortalIn.cs" />
+    <Compile Include="InteractionObjects\PortalOut.cs" />
+    <Compile Include="DamageObjects\MovingSpike.cs" />
     <Compile Include="SolidObjects\MovingWall.cs" />
     <Compile Include="SolidObjects\SolidObject.cs" />
     <Compile Include="SolidObjects\StationaryWall.cs" />
     <Compile Include="Vec2.cs" />
-    <Compile Include="Legs.cs" />
+    <Compile Include="InteractionObjects\Legs.cs" />
     <Compile Include="Level.cs" />
-    <Compile Include="Menu.cs" />
+    <Compile Include="Menu\Menu.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -85,8 +85,8 @@
     <Compile Include="GXPEngine\AddOns\Window.cs" />
     <Compile Include="GXPEngine\AddOns\EasyDraw.cs" />
     <Compile Include="GXPEngine\Core\Collision.cs" />
-    <Compile Include="SolidObjects\Skull.cs" />
-    <Compile Include="Spike.cs" />
+    <Compile Include="Player\Skull.cs" />
+    <Compile Include="DamageObjects\Spike.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>

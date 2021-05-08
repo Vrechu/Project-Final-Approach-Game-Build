@@ -15,7 +15,7 @@ class MovingSpike : SolidObject
         AddChild(new DamageHitbox());
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateWall;
     }

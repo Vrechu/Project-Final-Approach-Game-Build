@@ -9,11 +9,11 @@ class Skull : SolidObject
     private float _speed = 0;
     private Vec2 _gravityVelocity;
     private Vec2 _WalkingDirection = new Vec2(0, 1);
-    private float _walkingSpeed = 5;
+    private float _walkingSpeed = 5; //speed at which the player walks along surfaces
     private bool isGrounded = false;
     private bool canWalk = false;
 
-    private float _teleportCooldownTime = 1;
+    private float _teleportCooldownTime = 1; // cooldown time for using a portal in seconds
     private float oldTime = -1;
     private bool canTeleport = true;
 
@@ -127,11 +127,17 @@ class Skull : SolidObject
         _WalkingDirection = _WalkingDirection.Normalized() * _walkingSpeed;
     }
 
+    /// <summary>
+    /// sets the canWalk bool to true
+    /// </summary>
     private void PickupLegs()
     {
         canWalk = true;
     }
 
+    /// <summary>
+    /// moves the player to the portal out
+    /// </summary>
     private void MoveToPortalOut()
     {
         if (canTeleport)
@@ -140,6 +146,10 @@ class Skull : SolidObject
             SetXY(game.FindObjectOfType<PortalOut>().x, game.FindObjectOfType<PortalOut>().y);
         }
     }
+
+    /// <summary>
+    /// moves the player to portal in
+    /// </summary>
     private void MoveToPortalIn()
     {
         if (canTeleport)
@@ -149,6 +159,9 @@ class Skull : SolidObject
         }
     }
 
+    /// <summary>
+    /// counts down the portal timer
+    /// </summary>
     private void TeleportCooldown()
     {
         if (!canTeleport)

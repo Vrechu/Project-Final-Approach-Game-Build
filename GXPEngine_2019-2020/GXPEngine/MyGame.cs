@@ -28,7 +28,7 @@ public class MyGame : Game
 
 	private float _gravitySwitchCooldownTime = 2f; //Cooldown timer in seconds
 	private bool canSwitchGravity = true;
-	private float oldTime = Time.time;
+	private float oldTime =Time.time;
 
 	public MyGame() : base(1920, 1080, false)
 	{
@@ -269,6 +269,9 @@ public class MyGame : Game
 		}
 	}
 
+	/// <summary>
+	/// Stops and creates the current open screen
+	/// </summary>
 	private void ResetCurrentLevel()
     {
 		SwitchScreen(_screenState);

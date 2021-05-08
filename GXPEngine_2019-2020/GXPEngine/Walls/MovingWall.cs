@@ -14,7 +14,7 @@ class MovingWall : SolidObject
         MyGame.OnGravitySwitch += RotateWall;
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateWall;
     }

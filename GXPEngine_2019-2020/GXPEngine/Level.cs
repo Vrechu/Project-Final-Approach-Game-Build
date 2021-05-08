@@ -37,6 +37,10 @@ class Level : GameObject
         OnLevelFinished?.Invoke(_nextScreen);
     }
 
+    /// <summary>
+    /// Places tiles in the locations specified by the Tiled map file
+    /// </summary>
+    /// <param name="leveldata"></param>
     private void SpawnTiles(Map leveldata)
     {
         if (leveldata.Layers == null
