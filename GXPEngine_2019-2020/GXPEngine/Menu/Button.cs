@@ -10,6 +10,13 @@ class Button : AnimationSprite
     public static event Action<MyGame.ScreenState> OnButtonClicked;
     private MyGame.ScreenState _nextScreen;
 
+    /// <summary>
+    /// button class for menus
+    /// </summary>
+    /// <param name="fileName">animation sprite file name</param>
+    /// <param name="px">object x position</param>
+    /// <param name="py">object y position</param>
+    /// <param name="nextScreen">screen to be loaded on click</param>
     public Button(string fileName, float px, float py, MyGame.ScreenState nextScreen) : base(fileName, 2, 1)
     {
         SetXY(px, py);

@@ -8,6 +8,13 @@ class MovingWall : SolidObject
 {
     private float _speed = 0;
     private Vec2 _gravityVelocity;
+
+    /// <summary>
+    /// wall that moves with gravity
+    /// </summary>
+    /// <param name="SpriteImage">image filename</param>
+    /// <param name="px">object x position</param>
+    /// <param name="py">object y positino</param>
     public MovingWall(string SpriteImage, float px, float py) : base(SpriteImage ,1, 1 , px, py)
     {
         SetScaleXY(0.95f, 1);
@@ -37,8 +44,9 @@ class MovingWall : SolidObject
     }
 
     /// <summary>
-    /// Rotates the wall depending on the gravity direction
+    /// rotates the wall depending on the gravity direction
     /// </summary>
+    /// <param name="gravityDirection">direction gravity-affected objects move in</param>
     private void RotateWall(MyGame.GravityDirection gravityDirection)
     {
         switch (gravityDirection)

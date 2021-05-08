@@ -6,6 +6,11 @@ using GXPEngine;
 
 class DialogueWindow : Sprite
 {
+    /// <summary>
+    /// dialogue screen class
+    /// </summary>
+    /// <param name="screenImage">screen image file name</param>
+    /// <param name="nextScreen">next screen to be loaded</param>
     public DialogueWindow(string screenImage, MyGame.ScreenState nextScreen) : base(screenImage)
     {
         AddChild(new Button("Play_Game.png", width / 2, height / 2, nextScreen));

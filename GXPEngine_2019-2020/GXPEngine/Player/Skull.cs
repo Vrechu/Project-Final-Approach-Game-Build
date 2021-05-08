@@ -17,6 +17,11 @@ class Skull : SolidObject
     private float oldTime = -1;
     private bool canTeleport = true;
 
+    /// <summary>
+    /// player character
+    /// </summary>
+    /// <param name="px">object x position</param>
+    /// <param name="py">object y position</param>
     public Skull(float px, float py) : base("skull.png",1, 1, px, py)
     {
         SetXY(px, py);
@@ -94,6 +99,7 @@ class Skull : SolidObject
     /// <summary>
     /// Rotates the skull depending on the gravity direction
     /// </summary>
+    /// <param name="gravityDirection">direction gravity-affected objects move in</param>
     private void RotateSkull(MyGame.GravityDirection gravityDirection)
     {
         switch (gravityDirection)

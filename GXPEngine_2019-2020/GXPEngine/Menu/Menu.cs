@@ -6,6 +6,9 @@ using GXPEngine;
 
 class Menu : Sprite
 {
+    /// <summary>
+    /// menu class
+    /// </summary>
     public Menu() : base("placeholder_menu.png")
     {
         AddChild(new Button("Play_Game.png", width / 2, height / 2, MyGame.ScreenState.COMIC1));

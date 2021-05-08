@@ -16,6 +16,12 @@ class Level : GameObject
     private float _widthOffset = 200;
     private float _heightOffset = 100;
 
+    /// <summary>
+    /// level creator
+    /// </summary>
+    /// <param name="levelFileName"> name of the tiled level file</param>
+    /// <param name="backgroundFileName">file name of the background image</param>
+    /// <param name="nextScreen">next screen to be loaded</param>
     public Level(string levelFileName,string backgroundFileName, MyGame.ScreenState nextScreen) : base()
     {
         InteractionHitbox.OnGoalReached += NextScreen;
@@ -34,6 +40,9 @@ class Level : GameObject
         InteractionHitbox.OnGoalReached -= NextScreen;
     }
 
+    /// <summary>
+    /// invokes the OnLevelFinished event
+    /// </summary>
     private void NextScreen()
     {
         OnLevelFinished?.Invoke(_nextScreen);
@@ -42,7 +51,7 @@ class Level : GameObject
     /// <summary>
     /// Places tiles in the locations specified by the Tiled map file
     /// </summary>
-    /// <param name="leveldata"></param>
+    /// <param name="leveldata">tiled map data</param>
     private void SpawnTiles(Map leveldata)
     {
         if (leveldata.Layers == null    //nullcheck

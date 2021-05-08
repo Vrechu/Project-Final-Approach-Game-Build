@@ -8,16 +8,23 @@ class MovingSpike : SolidObject
 {
     private float _speed = 0;
     private Vec2 _gravityVelocity;
+
+    /// <summary>
+    /// spike that moves with gravity
+    /// </summary>
+    /// <param name="SpriteImage">sprite image filename</param>
+    /// <param name="px">object x position</param>
+    /// <param name="py">object y position</param>
     public MovingSpike(string SpriteImage, float px, float py) : base(SpriteImage,1, 1, px, py)
     {
         SetScaleXY(0.85f, 0.90f);
-        MyGame.OnGravitySwitch += RotateWall;
+        MyGame.OnGravitySwitch += RotateSpike;
         AddChild(new DamageHitbox());
     }
 
     protected override void OnDestroy()
     {
-        MyGame.OnGravitySwitch -= RotateWall;
+        MyGame.OnGravitySwitch -= RotateSpike;
     }
 
     void Update()
@@ -40,7 +47,8 @@ class MovingSpike : SolidObject
     /// <summary>
     /// Rotates the spike depending on the gravity direction
     /// </summary>
-    private void RotateWall(MyGame.GravityDirection gravityDirection)
+    /// <param name="gravityDirection">direction gravity-affected objects move in</param>
+    private void RotateSpike(MyGame.GravityDirection gravityDirection)
     {
         switch (gravityDirection)
         {

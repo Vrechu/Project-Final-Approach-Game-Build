@@ -6,6 +6,11 @@ using GXPEngine;
 
 class PortalOut : Sprite
 {
+    /// <summary>
+    /// portal out
+    /// </summary>
+    /// <param name="px">object x position</param>
+    /// <param name="py">object y position</param>
     public PortalOut(float px, float py) : base("portal_out.png")
     {
         SetXY(px, py);

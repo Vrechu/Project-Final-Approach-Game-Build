@@ -7,6 +7,10 @@ using GXPEngine;
 class DamageHitbox : Sprite
 {
     private float _offset = 2f;
+
+    /// <summary>
+    /// hitbox for damaging objects
+    /// </summary>
     public DamageHitbox() : base("square.png")
     {
         SetOrigin(width / 2, height / 2);

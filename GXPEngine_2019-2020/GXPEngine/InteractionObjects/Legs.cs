@@ -6,6 +6,11 @@ using GXPEngine;
 
 class Legs : Sprite
 {
+    /// <summary>
+    /// legs powerup
+    /// </summary>
+    /// <param name="px">object x position</param>
+    /// <param name="py">object y position</param>
     public Legs(float px, float py) : base("circle.png")
     {
         SetXY(px, py);
