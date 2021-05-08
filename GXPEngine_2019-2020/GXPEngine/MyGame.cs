@@ -6,7 +6,9 @@ public class MyGame : Game
 {
 	public enum ScreenState
 	{
-		MENU, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, COMIC1, COMIC2, COMIC3, COMIC4, INTRO, CREDITS
+		MENU, INTRO, CREDITS,
+		LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6,
+		COMIC1, COMIC2, COMIC3, COMIC4
 	}
 	public ScreenState _screenState;
 
@@ -59,6 +61,7 @@ public class MyGame : Game
 	void Update()
 	{
 		canSwitchScreen = true;
+		ResetImput();
 		GravityInputs();
 		GravitySwitchCooldown();		
 	}
@@ -97,32 +100,32 @@ public class MyGame : Game
 				#region levels
 				case ScreenState.LEVEL1:
 					{
-						StartLevel("Tryout4.tmx", "placeholder_level.png",  ScreenState.LEVEL2);
+						StartLevel("level1.tmx", "placeholder_level.png",  ScreenState.LEVEL2);
 						break;
 					}
 				case ScreenState.LEVEL2:
 					{
-						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.COMIC2);
+						StartLevel("level2.tmx", "placeholder_level.png", ScreenState.COMIC2);
 						break;
 					}
 				case ScreenState.LEVEL3:
 					{
-						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.LEVEL4);
+						StartLevel("level3.tmx", "placeholder_level.png", ScreenState.LEVEL4);
 						break;
 					}
 				case ScreenState.LEVEL4:
 					{
-						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.COMIC3);
+						StartLevel("Tryout4.tmx", "placeholder_level.png", ScreenState.COMIC3);
 						break;
 					}
 				case ScreenState.LEVEL5:
 					{
-						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.LEVEL6);
+						StartLevel("Tryout4.tmx", "placeholder_level.png", ScreenState.LEVEL6);
 						break;
 					}
 				case ScreenState.LEVEL6:
 					{
-						StartLevel("Tryout3.tmx", "placeholder_level.png", ScreenState.COMIC4);
+						StartLevel("Tryout4.tmx", "placeholder_level.png", ScreenState.COMIC4);
 						break;
 					}
 				#endregion
@@ -165,17 +168,24 @@ public class MyGame : Game
 	/// <summary>
 	/// closes any window and starts the selected level
 	/// </summary>
-	/// <param name="levelName"> file name of level</param>
+	/// <param name="levelName">file name of level</param>
+	/// <param name="background">file name of level background image</param>
+	/// <param name="nextScreen">next screen to be loaded</param>
 	private void StartLevel(string levelName, string background, ScreenState nextScreen)
     {
         ClosePreviousScreen();
         LateAddChild(new Level(levelName,background, nextScreen));
     }
 
-	private void StartDialogueWindow(string screenimage, ScreenState nextScreen)
+	/// <summary>
+	/// closes any window and starts the selected dialoge window
+	/// </summary>
+	/// <param name="screenImage">file name of screen image</param>
+	/// <param name="nextScreen">next screen to be loaded</param>
+	private void StartDialogueWindow(string screenImage, ScreenState nextScreen)
     {
 		ClosePreviousScreen();
-		LateAddChild(new DialogueWindow(screenimage, nextScreen));
+		LateAddChild(new DialogueWindow(screenImage, nextScreen));
 	}
 
 	/// <summary>
@@ -198,6 +208,17 @@ public class MyGame : Game
 	}
 
 	/// <summary>
+	/// resets level on input R
+	/// </summary>
+	private void ResetImput()
+    {
+        if (Input.GetKeyDown(Key.R))
+        {
+			ResetCurrentLevel();
+        }
+    }
+
+	/// <summary>
 	/// Stops and creates the current open screen
 	/// </summary>
 	private void ResetCurrentLevel()
@@ -212,19 +233,19 @@ public class MyGame : Game
 	{
 		if (canSwitchGravity)
 		{
-			if (Input.GetKey(Key.UP))
+			if (Input.GetKeyDown(Key.UP))
 			{
 				SetGravityDirection(GravityDirection.UP);
 			}
-			else if (Input.GetKey(Key.DOWN))
+			else if (Input.GetKeyDown(Key.DOWN))
 			{
 				SetGravityDirection(GravityDirection.DOWN);
 			}
-			else if (Input.GetKey(Key.LEFT))
+			else if (Input.GetKeyDown(Key.LEFT))
 			{
 				SetGravityDirection(GravityDirection.LEFT);
 			}
-			else if (Input.GetKey(Key.RIGHT))
+			else if (Input.GetKeyDown(Key.RIGHT))
 			{
 				SetGravityDirection(GravityDirection.RIGHT);
 			}

@@ -186,6 +186,7 @@ class Level : GameObject
                         }
                     #endregion
 
+                    #region other
                     case 215:
                         {
                             PlaceSkull(column, row);
@@ -222,55 +223,105 @@ class Level : GameObject
                             PlacePortalOut(column, row);
                             break;
                         }
+                        #endregion
                 }
             }
         }
     }
 
+    #region tile placing methods
+
+    /// <summary>
+    /// places stationary wall
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
+    /// <param name="frame">animation sprite frame. same as tiled ID</param>
     private void PlaceStationaryWall(float column, float row, int frame)
     {
         AddChild(new StationaryWall(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset, frame -1));
     }
 
+    /// <summary>
+    /// places skull
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
     private void PlaceSkull(float column, float row)
     {
         AddChild(new Skull(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
+    /// <summary>
+    /// places spike
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
+    /// <param name="spikeRotation">direction the spike is facing in degrees</param>
     private void PlaceSpike(float column, float row, int spikeRotation)
     {
         AddChild(new Spike(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset, spikeRotation));
     }
 
+    /// <summary>
+    /// places moving wall
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
     private void PlaceMovingWall(float column, float row)
     {
         AddChild(new MovingWall("moving_wall.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
+    /// <summary>
+    /// places legs
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
     private void PlaceLegs(float column, float row)
     {
         AddChild(new Legs(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
+    /// <summary>
+    /// places goal
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
     private void PlaceGoal(float column, float row)
     {
         AddChild(new Goal(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
+    /// <summary>
+    /// places moving spike
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
     private void PlaceMovingSpike(float column, float row)
     {
         AddChild(new MovingSpike("moving_spikes.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
+    /// <summary>
+    /// places portal in
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
     private void PlacePortalIn(float column, float row)
     {
         AddChild(new PortalIn(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
+    /// <summary>
+    /// places portal out
+    /// </summary>
+    /// <param name="column">tiled map column</param>
+    /// <param name="row">tiled map row</param>
     private void PlacePortalOut(float column, float row)
     {
         AddChild(new PortalOut(column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
-        
+    #endregion
 }
 
