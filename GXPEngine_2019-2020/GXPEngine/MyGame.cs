@@ -10,15 +10,17 @@ public class MyGame : Game
 		LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6,
 		COMIC1, COMIC2, COMIC3, COMIC4
 	}
-	public ScreenState _screenState;
+	private ScreenState _screenState;
 
 	private bool canSwitchScreen = true;
+
+	public static event Action<ScreenState> OnScreenSwitch;
 
 	public enum GravityDirection
 	{
 		UP, DOWN, LEFT, RIGHT
 	}
-	private static GravityDirection gravityDirection;
+	private GravityDirection gravityDirection;
 
 	public static event Action<GravityDirection> OnGravitySwitch;
 
@@ -41,6 +43,7 @@ public class MyGame : Game
 		Level.OnLevelStart += ResetGravity;
 		Level.OnLevelFinished += SwitchScreen;
 
+		AddChild(new AudioPlayer());
 		SwitchScreen(ScreenState.MENU);
 		SetGravityDirection(GravityDirection.DOWN);
 	}
@@ -76,7 +79,7 @@ public class MyGame : Game
 		if (canSwitchScreen)
 		{
 			canSwitchScreen = false;
-			_screenState = screenState;
+            _screenState = screenState;
 			switch (screenState)
 			{
                 #region menu
@@ -153,6 +156,7 @@ public class MyGame : Game
 					}
 					#endregion
 			}
+			OnScreenSwitch?.Invoke(_screenState);
 		}
 	}     
 
