@@ -46,6 +46,7 @@
     <Compile Include="InteractionObjects\PortalOut.cs" />
     <Compile Include="DamageObjects\MovingSpike.cs" />
     <Compile Include="AudioPlayer.cs" />
+    <Compile Include="Player\PlayerAnimations.cs" />
     <Compile Include="Walls\MovingWall.cs" />
     <Compile Include="SolidObject.cs" />
     <Compile Include="Walls\StationaryWall.cs" />

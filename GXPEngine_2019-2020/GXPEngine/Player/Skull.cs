@@ -17,6 +17,14 @@ class Skull : SolidObject
     private float oldTime = -1;
     private bool canTeleport = true;
 
+    private PlayerAnimations _playerAnimations;
+    private enum AnimationState
+    {
+        IDLE, WALKING, FALLING
+    }
+    private AnimationState _animationState;
+    private byte _animationtime = 5;
+
     /// <summary>
     /// player character
     /// </summary>
@@ -27,6 +35,7 @@ class Skull : SolidObject
         SetXY(px, py);
         SetScaleXY(0.95f, 1f);
         AddChild(new InteractionHitbox());
+        AddChild(_playerAnimations = new PlayerAnimations());
 
         MyGame.OnGravitySwitch += RotateSkull;
         InteractionHitbox.OnLegsPickup += PickupLegs;
@@ -46,8 +55,10 @@ class Skull : SolidObject
     {
         MoveSkull();
         CheckIfGounded();
+        Console.WriteLine(_animationState);
         Walk();
         TeleportCooldown();
+        Console.WriteLine(_animationState);
     }
 
 
@@ -75,6 +86,7 @@ class Skull : SolidObject
         else if (_speed > 0)
         {
             isGrounded = false;
+            SetAnimationState(AnimationState.FALLING);
         }
     }
 
@@ -83,16 +95,21 @@ class Skull : SolidObject
     /// </summary>
     private void Walk()
     {
-        if (isGrounded && canWalk)
+        if (isGrounded)
         {
-            if (Input.GetKey(Key.A))
+            if (canWalk && Input.GetKey(Key.A))
             {
+                SetAnimationState(AnimationState.WALKING);
                 MoveUntilCollision(_WalkingDirection.x * -1, _WalkingDirection.y * -1, game.FindObjectsOfType<SolidObject>());
+                _playerAnimations.width *= -1;
             }
-            else if (Input.GetKey(Key.D))
+            else if (canWalk && Input.GetKey(Key.D))
             {
+                SetAnimationState(AnimationState.WALKING);
                 MoveUntilCollision(_WalkingDirection.x, _WalkingDirection.y, game.FindObjectsOfType<SolidObject>());
+                _playerAnimations.width *= 1;
             }
+            else SetAnimationState(AnimationState.IDLE);
         }
     }
 
@@ -178,6 +195,33 @@ class Skull : SolidObject
         {
             canTeleport = true;
             oldTime = _teleportCooldownTime * 1000;
+        }
+    }
+
+    /// <summary>
+    /// sets the animation state
+    /// </summary>
+    /// <param name="animationState">animation state to set the animation to</param>
+    private void SetAnimationState(AnimationState animationState)
+    {
+        _animationState = animationState;
+        switch (_animationState)
+        {
+            case AnimationState.IDLE:
+                {
+                    _playerAnimations.SetCycle(5, 5, _animationtime);
+                    break;
+                }
+            case AnimationState.WALKING:
+                {
+                    _playerAnimations.SetCycle(1, 5, _animationtime);
+                    break;
+                }
+            case AnimationState.FALLING:
+                {
+                    _playerAnimations.SetCycle(6, 6, _animationtime);
+                    break;
+                }
         }
     }
 }
