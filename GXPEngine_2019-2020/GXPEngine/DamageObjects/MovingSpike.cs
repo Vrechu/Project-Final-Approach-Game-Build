@@ -9,6 +9,12 @@ class MovingSpike : SolidObject
     private float _speed = 0;
     private Vec2 _gravityVelocity;
 
+    private float _teleportCooldownTime = 1; // cooldown time for using a portal in seconds
+    private float oldTime = -1;
+    private bool canTeleport = true;
+
+    private PortalHitbox _portalHitbox;
+
     /// <summary>
     /// spike that moves with gravity
     /// </summary>
@@ -20,11 +26,16 @@ class MovingSpike : SolidObject
         SetScaleXY(0.85f, 0.90f);
         MyGame.OnGravitySwitch += RotateSpike;
         AddChild(new DamageHitbox());
+        AddChild(_portalHitbox = new PortalHitbox());
+        PortalHitbox.OnPortalInHit += MoveToPortalOut;
+        PortalHitbox.OnPortalOutHit += MoveToPortalOut;
     }
 
     protected override void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateSpike;
+        PortalHitbox.OnPortalOutHit -= MoveToPortalOut;
+        PortalHitbox.OnPortalOutHit -= MoveToPortalOut;
     }
 
     void Update()
@@ -72,6 +83,47 @@ class MovingSpike : SolidObject
                     rotation = 270;
                     break;
                 }
+        }
+    }
+
+    /// <summary>
+    /// moves the spike to the portal out
+    /// </summary>
+    private void MoveToPortalOut(GameObject hitbox)
+    {
+        if (hitbox == _portalHitbox && canTeleport)
+        {
+            canTeleport = false;
+            SetXY(game.FindObjectOfType<PortalOut>().x, game.FindObjectOfType<PortalOut>().y);
+        }
+    }
+
+    /// <summary>
+    /// moves the spike to portal in
+    /// </summary>
+    private void MoveToPortalIn(GameObject hitbox)
+    {
+        if (hitbox == _portalHitbox && canTeleport)
+        {
+            canTeleport = false;
+            SetXY(game.FindObjectOfType<PortalIn>().x, game.FindObjectOfType<PortalIn>().y);
+        }
+    }
+
+    /// <summary>
+    /// counts down the portal timer
+    /// </summary>
+    private void TeleportCooldown()
+    {
+        if (!canTeleport)
+        {
+            oldTime -= Time.deltaTime;
+        }
+
+        if (oldTime < 0)
+        {
+            canTeleport = true;
+            oldTime = _teleportCooldownTime * 1000;
         }
     }
 }

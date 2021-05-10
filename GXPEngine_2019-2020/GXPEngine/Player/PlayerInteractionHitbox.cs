@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GXPEngine;
 
-class InteractionHitbox : Sprite
+class PlayerInteractionHitbox : Sprite
 {    
     public static event Action OnDeath;
     public static event Action OnLegsPickup;
@@ -17,7 +17,7 @@ class InteractionHitbox : Sprite
     /// <summary>
     /// hitbox for interacting with other objects
     /// </summary>
-    public InteractionHitbox() : base("square.png")
+    public PlayerInteractionHitbox() : base("square.png")
     {
         SetOrigin(width / 2, height / 2);
         alpha = 0;

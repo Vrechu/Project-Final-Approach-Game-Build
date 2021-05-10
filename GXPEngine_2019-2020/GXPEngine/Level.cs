@@ -24,7 +24,7 @@ class Level : GameObject
     /// <param name="nextScreen">next screen to be loaded</param>
     public Level(string levelFileName,string backgroundFileName, MyGame.ScreenState nextScreen) : base()
     {
-        InteractionHitbox.OnGoalReached += NextScreen;
+        PlayerInteractionHitbox.OnGoalReached += NextScreen;
         _nextScreen = nextScreen;
         levelData = MapParser.ReadMap(levelFileName);
         _heightOffset += _sideLength / 2;
@@ -37,7 +37,7 @@ class Level : GameObject
 
     protected override void OnDestroy()
     {
-        InteractionHitbox.OnGoalReached -= NextScreen;
+        PlayerInteractionHitbox.OnGoalReached -= NextScreen;
     }
 
     /// <summary>

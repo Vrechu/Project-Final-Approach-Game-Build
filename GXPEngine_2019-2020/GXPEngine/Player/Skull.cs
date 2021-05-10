@@ -34,31 +34,29 @@ class Skull : SolidObject
     {
         SetXY(px, py);
         SetScaleXY(0.95f, 1f);
-        AddChild(new InteractionHitbox());
+        AddChild(new PlayerInteractionHitbox());
         AddChild(_playerAnimations = new PlayerAnimations());
 
         MyGame.OnGravitySwitch += RotateSkull;
-        InteractionHitbox.OnLegsPickup += PickupLegs;
-        InteractionHitbox.OnPortalInHit += MoveToPortalOut;
-        InteractionHitbox.OnPortalOutHit += MoveToPortalIn;
+        PlayerInteractionHitbox.OnLegsPickup += PickupLegs;
+        PlayerInteractionHitbox.OnPortalInHit += MoveToPortalOut;
+        PlayerInteractionHitbox.OnPortalOutHit += MoveToPortalIn;
     }
 
     protected override void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateSkull;
-        InteractionHitbox.OnLegsPickup -= PickupLegs;
-        InteractionHitbox.OnPortalInHit -= MoveToPortalOut;
-        InteractionHitbox.OnPortalOutHit -= MoveToPortalIn;
+        PlayerInteractionHitbox.OnLegsPickup -= PickupLegs;
+        PlayerInteractionHitbox.OnPortalInHit -= MoveToPortalOut;
+        PlayerInteractionHitbox.OnPortalOutHit -= MoveToPortalIn;
     }
 
     private void Update()
     {
         MoveSkull();
         CheckIfGounded();
-        Console.WriteLine(_animationState);
         Walk();
         TeleportCooldown();
-        Console.WriteLine(_animationState);
     }
 
 

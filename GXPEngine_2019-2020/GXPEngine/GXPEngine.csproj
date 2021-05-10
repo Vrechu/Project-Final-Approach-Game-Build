@@ -41,12 +41,13 @@
     <Compile Include="DamageObjects\DamageHitbox.cs" />
     <Compile Include="Menu\DialogueWindow.cs" />
     <Compile Include="InteractionObjects\Goal.cs" />
-    <Compile Include="Player\InteractionHitbox.cs" />
+    <Compile Include="Player\PlayerInteractionHitbox.cs" />
     <Compile Include="InteractionObjects\PortalIn.cs" />
     <Compile Include="InteractionObjects\PortalOut.cs" />
     <Compile Include="DamageObjects\MovingSpike.cs" />
     <Compile Include="AudioPlayer.cs" />
     <Compile Include="Player\PlayerAnimations.cs" />
+    <Compile Include="PortalHitbox.cs" />
     <Compile Include="Walls\MovingWall.cs" />
     <Compile Include="SolidObject.cs" />
     <Compile Include="Walls\StationaryWall.cs" />

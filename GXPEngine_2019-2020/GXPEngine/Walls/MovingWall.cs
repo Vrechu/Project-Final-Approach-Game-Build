@@ -9,6 +9,12 @@ class MovingWall : SolidObject
     private float _speed = 0;
     private Vec2 _gravityVelocity;
 
+    private float _teleportCooldownTime = 1; // cooldown time for using a portal in seconds
+    private float oldTime = -1;
+    private bool canTeleport = true;
+
+    private PortalHitbox _portalHitbox;
+
     /// <summary>
     /// wall that moves with gravity
     /// </summary>
@@ -18,12 +24,17 @@ class MovingWall : SolidObject
     public MovingWall(string SpriteImage, float px, float py) : base(SpriteImage ,1, 1 , px, py)
     {
         SetScaleXY(0.95f, 1);
+        AddChild(_portalHitbox = new PortalHitbox());
         MyGame.OnGravitySwitch += RotateWall;
+        PortalHitbox.OnPortalInHit += MoveToPortalOut;
+        PortalHitbox.OnPortalOutHit += MoveToPortalOut;
     }
 
     protected override void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateWall;
+        PortalHitbox.OnPortalOutHit -= MoveToPortalOut;
+        PortalHitbox.OnPortalOutHit -= MoveToPortalOut;
     }
 
     void Update()
@@ -71,6 +82,46 @@ class MovingWall : SolidObject
                     rotation = 270;
                     break;
                 }
+        }
+    }
+    /// <summary>
+    /// moves the player to the portal out
+    /// </summary>
+    private void MoveToPortalOut(GameObject hitbox)
+    {
+        if (hitbox == _portalHitbox && canTeleport)
+        {
+            canTeleport = false;
+            SetXY(game.FindObjectOfType<PortalOut>().x, game.FindObjectOfType<PortalOut>().y);
+        }
+    }
+
+    /// <summary>
+    /// moves the player to portal in
+    /// </summary>
+    private void MoveToPortalIn(GameObject hitbox)
+    {
+        if (hitbox == _portalHitbox && canTeleport)
+        {
+            canTeleport = false;
+            SetXY(game.FindObjectOfType<PortalIn>().x, game.FindObjectOfType<PortalIn>().y);
+        }
+    }
+
+    /// <summary>
+    /// counts down the portal timer
+    /// </summary>
+    private void TeleportCooldown()
+    {
+        if (!canTeleport)
+        {
+            oldTime -= Time.deltaTime;
+        }
+
+        if (oldTime < 0)
+        {
+            canTeleport = true;
+            oldTime = _teleportCooldownTime * 1000;
         }
     }
 }

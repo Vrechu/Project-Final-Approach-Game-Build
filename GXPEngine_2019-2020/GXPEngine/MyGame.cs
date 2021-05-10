@@ -38,8 +38,8 @@ public class MyGame : Game
 	public MyGame() : base(1920, 1080, false)
 	{
 		Button.OnButtonClicked += SwitchScreen;
-		InteractionHitbox.OnDeath += ResetGravity;
-		InteractionHitbox.OnDeath += ResetCurrentLevel;
+		PlayerInteractionHitbox.OnDeath += ResetGravity;
+		PlayerInteractionHitbox.OnDeath += ResetCurrentLevel;
 		Level.OnLevelStart += ResetGravity;
 		Level.OnLevelFinished += SwitchScreen;
 
@@ -51,8 +51,8 @@ public class MyGame : Game
 	protected override void OnDestroy()
 	{
 		Button.OnButtonClicked -= SwitchScreen;
-		InteractionHitbox.OnDeath -= ResetGravity;
-		InteractionHitbox.OnDeath -= ResetCurrentLevel;
+		PlayerInteractionHitbox.OnDeath -= ResetGravity;
+		PlayerInteractionHitbox.OnDeath -= ResetCurrentLevel;
 		Level.OnLevelStart -= ResetGravity;
 		Level.OnLevelFinished -= SwitchScreen;
 	}
