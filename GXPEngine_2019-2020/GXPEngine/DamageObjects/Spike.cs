@@ -12,7 +12,7 @@ class Spike : SolidObject
     /// <param name="px">object x position</param>
     /// <param name="py">object y position</param>
     /// <param name="pRotation">object rotation in degrees</param>
-    public Spike(float px, float py, float pRotation) : base("triangle.png", 1, 1,px, py)
+    public Spike(string spriteImage, float px, float py, float pRotation ) : base( spriteImage, 1, 1,px, py)
     {
         SetOrigin(width / 2, height / 2);
         SetScaleXY(0.95f, 1);

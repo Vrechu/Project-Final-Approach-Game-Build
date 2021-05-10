@@ -111,7 +111,7 @@ public class MyGame : Game
 				#region levels
 				case ScreenState.LEVEL1:
 					{
-						StartLevel("tryout4.tmx", "placeholder_level.png", ScreenState.LEVEL2);
+						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.LEVEL2);
 						break;
 					}
 				case ScreenState.LEVEL2:

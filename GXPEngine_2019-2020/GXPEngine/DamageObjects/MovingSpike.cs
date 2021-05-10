@@ -15,7 +15,7 @@ class MovingSpike : SolidObject
 
     private PortalHitbox _portalHitbox;
 
-    private Sprite _imageSprite;
+    private AnimationSprite _imageSprite;
 
     /// <summary>
     /// spike that moves with gravity
@@ -23,18 +23,21 @@ class MovingSpike : SolidObject
     /// <param name="spriteImage">sprite image filename</param>
     /// <param name="px">object x position</param>
     /// <param name="py">object y position</param>
-    public MovingSpike(string spriteImage, float px, float py) : base("square.png",1, 1, px, py)
+    public MovingSpike(float px, float py, int frame) : base("square.png",1, 1, px, py)
     {
         SetScaleXY(0.85f, 0.90f);
-        MyGame.OnGravitySwitch += RotateSpike;
+        SetFrame(frame);
         AddChild(new DamageHitbox());
         AddChild(_portalHitbox = new PortalHitbox());
+        MyGame.OnGravitySwitch += RotateSpike;
         PortalHitbox.OnPortalInHit += MoveToPortalOut;
         PortalHitbox.OnPortalOutHit += MoveToPortalIn;
 
         alpha = 0;
-        AddChild(_imageSprite = new Sprite("triangle.png"));
+        AddChild(_imageSprite = new AnimationSprite("Tiles.png", 30, 16));
+        _imageSprite.SetFrame(frame);
         _imageSprite.SetOrigin(_imageSprite.width / 2, _imageSprite.height / 2);
+
     }
 
     protected override void OnDestroy()
