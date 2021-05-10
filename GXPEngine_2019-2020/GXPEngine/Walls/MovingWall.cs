@@ -14,27 +14,31 @@ class MovingWall : SolidObject
     private bool canTeleport = true;
 
     private PortalHitbox _portalHitbox;
+    private Sprite _imageSprite;
 
     /// <summary>
     /// wall that moves with gravity
     /// </summary>
-    /// <param name="SpriteImage">image filename</param>
+    /// <param name="spriteImage">image filename</param>
     /// <param name="px">object x position</param>
     /// <param name="py">object y positino</param>
-    public MovingWall(string SpriteImage, float px, float py) : base(SpriteImage ,1, 1 , px, py)
+    public MovingWall(string spriteImage, float px, float py) : base("square.png" ,1, 1 , px, py)
     {
         SetScaleXY(0.95f, 1);
         AddChild(_portalHitbox = new PortalHitbox());
         MyGame.OnGravitySwitch += RotateWall;
         PortalHitbox.OnPortalInHit += MoveToPortalOut;
-        PortalHitbox.OnPortalOutHit += MoveToPortalOut;
+        PortalHitbox.OnPortalOutHit += MoveToPortalIn;
+        alpha = 0;
+        AddChild(_imageSprite = new Sprite(spriteImage));
+        _imageSprite.SetOrigin(_imageSprite.width / 2, _imageSprite.height / 2);
     }
 
     protected override void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateWall;
-        PortalHitbox.OnPortalOutHit -= MoveToPortalOut;
-        PortalHitbox.OnPortalOutHit -= MoveToPortalOut;
+        PortalHitbox.OnPortalInHit -= MoveToPortalOut;
+        PortalHitbox.OnPortalOutHit -= MoveToPortalIn;
     }
 
     void Update()
@@ -65,27 +69,31 @@ class MovingWall : SolidObject
             case MyGame.GravityDirection.UP:
                 {
                     rotation = 180;
+                    _imageSprite.rotation = -180;
                     break;
                 }
             case MyGame.GravityDirection.DOWN:
                 {
                     rotation = 0;
+                    _imageSprite.rotation = 0;
                     break;
                 }
             case MyGame.GravityDirection.LEFT:
                 {
                     rotation = 90;
+                    _imageSprite.rotation = -90;
                     break;
                 }
             case MyGame.GravityDirection.RIGHT:
                 {
                     rotation = 270;
+                    _imageSprite.rotation = -270;
                     break;
                 }
         }
     }
     /// <summary>
-    /// moves the player to the portal out
+    /// moves the wall to the portal out
     /// </summary>
     private void MoveToPortalOut(GameObject hitbox)
     {
@@ -97,7 +105,7 @@ class MovingWall : SolidObject
     }
 
     /// <summary>
-    /// moves the player to portal in
+    /// moves the wall to portal in
     /// </summary>
     private void MoveToPortalIn(GameObject hitbox)
     {

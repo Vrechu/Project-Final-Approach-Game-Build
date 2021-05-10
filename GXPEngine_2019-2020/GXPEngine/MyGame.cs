@@ -4,9 +4,10 @@ using GXPEngine;                                // GXPEngine contains the engine
 
 public class MyGame : Game
 {
-	public enum ScreenState
+    #region screen management
+    public enum ScreenState
 	{
-		MENU, INTRO, CREDITS,
+		NULL, MENU, INTRO, CREDITS, 
 		LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6,
 		COMIC1, COMIC2, COMIC3, COMIC4
 	}
@@ -15,8 +16,10 @@ public class MyGame : Game
 	private bool canSwitchScreen = true;
 
 	public static event Action<ScreenState> OnScreenSwitch;
+    #endregion
 
-	public enum GravityDirection
+    #region gravity management
+    public enum GravityDirection
 	{
 		UP, DOWN, LEFT, RIGHT
 	}
@@ -34,15 +37,16 @@ public class MyGame : Game
 	private float _gravitySwitchCooldownTime = 2f; //Cooldown timer in seconds
 	private bool canSwitchGravity = true;
 	private float oldTime =Time.time;
+    #endregion
 
-	public MyGame() : base(1920, 1080, false)
+    public MyGame() : base(1920, 1080, false)
 	{
 		Button.OnButtonClicked += SwitchScreen;
 		PlayerInteractionHitbox.OnDeath += ResetGravity;
 		PlayerInteractionHitbox.OnDeath += ResetCurrentLevel;
 		Level.OnLevelStart += ResetGravity;
 		Level.OnLevelFinished += SwitchScreen;
-
+		
 		AddChild(new AudioPlayer());
 		SwitchScreen(ScreenState.MENU);
 		SetGravityDirection(GravityDirection.DOWN);
@@ -78,12 +82,16 @@ public class MyGame : Game
 	{
 		if (canSwitchScreen)
 		{
+			if (_screenState != screenState)
+			{
+				OnScreenSwitch?.Invoke(screenState);
+			}
 			canSwitchScreen = false;
-            _screenState = screenState;
+			_screenState = screenState;
 			switch (screenState)
 			{
-                #region menu
-                case ScreenState.MENU:
+				#region menu
+				case ScreenState.MENU:
 					{
 						StartMenu();
 						break;
@@ -103,7 +111,7 @@ public class MyGame : Game
 				#region levels
 				case ScreenState.LEVEL1:
 					{
-						StartLevel("tryout4.tmx", "placeholder_level.png",  ScreenState.LEVEL2);
+						StartLevel("tryout4.tmx", "placeholder_level.png", ScreenState.LEVEL2);
 						break;
 					}
 				case ScreenState.LEVEL2:
@@ -156,9 +164,8 @@ public class MyGame : Game
 					}
 					#endregion
 			}
-			OnScreenSwitch?.Invoke(_screenState);
 		}
-	}     
+	}
 
 	/// <summary>
 	/// closes any window and starts the menu

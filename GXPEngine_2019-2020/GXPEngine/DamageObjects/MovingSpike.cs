@@ -15,27 +15,33 @@ class MovingSpike : SolidObject
 
     private PortalHitbox _portalHitbox;
 
+    private Sprite _imageSprite;
+
     /// <summary>
     /// spike that moves with gravity
     /// </summary>
-    /// <param name="SpriteImage">sprite image filename</param>
+    /// <param name="spriteImage">sprite image filename</param>
     /// <param name="px">object x position</param>
     /// <param name="py">object y position</param>
-    public MovingSpike(string SpriteImage, float px, float py) : base(SpriteImage,1, 1, px, py)
+    public MovingSpike(string spriteImage, float px, float py) : base("square.png",1, 1, px, py)
     {
         SetScaleXY(0.85f, 0.90f);
         MyGame.OnGravitySwitch += RotateSpike;
         AddChild(new DamageHitbox());
         AddChild(_portalHitbox = new PortalHitbox());
         PortalHitbox.OnPortalInHit += MoveToPortalOut;
-        PortalHitbox.OnPortalOutHit += MoveToPortalOut;
+        PortalHitbox.OnPortalOutHit += MoveToPortalIn;
+
+        alpha = 0;
+        AddChild(_imageSprite = new Sprite("triangle.png"));
+        _imageSprite.SetOrigin(_imageSprite.width / 2, _imageSprite.height / 2);
     }
 
     protected override void OnDestroy()
     {
         MyGame.OnGravitySwitch -= RotateSpike;
-        PortalHitbox.OnPortalOutHit -= MoveToPortalOut;
-        PortalHitbox.OnPortalOutHit -= MoveToPortalOut;
+        PortalHitbox.OnPortalInHit -= MoveToPortalOut;
+        PortalHitbox.OnPortalOutHit -= MoveToPortalIn;
     }
 
     void Update()
@@ -66,21 +72,25 @@ class MovingSpike : SolidObject
             case MyGame.GravityDirection.UP:
                 {
                     rotation = 180;
+                    _imageSprite.rotation = -180;
                     break;
                 }
             case MyGame.GravityDirection.DOWN:
                 {
                     rotation = 0;
+                    _imageSprite.rotation = 0;
                     break;
                 }
             case MyGame.GravityDirection.LEFT:
                 {
                     rotation = 90;
+                    _imageSprite.rotation = -90;
                     break;
                 }
             case MyGame.GravityDirection.RIGHT:
                 {
                     rotation = 270;
+                    _imageSprite.rotation = -270;
                     break;
                 }
         }

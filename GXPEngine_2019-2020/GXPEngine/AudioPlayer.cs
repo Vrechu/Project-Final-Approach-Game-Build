@@ -6,15 +6,21 @@ using GXPEngine;
 
 class AudioPlayer : GameObject
 {
-    SoundChannel _musicChannel;
-    Sound _music;
+    private SoundChannel _musicChannel;
+    readonly private Sound _menuMusic;
+    readonly private Sound _levelMusic;
+
+    private SoundChannel _walkingChannel;
+    readonly private Sound _walkingSound;
 
     /// <summary>
     /// audio playing class
     /// </summary>
     public AudioPlayer()
     {
-        _music = new Sound("placeholder_background_music.mp3", true, true);
+        _menuMusic = new Sound("placeholder_background_music.mp3", true, true);
+        _levelMusic = new Sound("placeholder_background_music.mp3", true, true);
+        _walkingSound = new Sound("placeholder_death_sound.wav", true, true);
         EventSubscriptions();
     }
 
@@ -22,14 +28,28 @@ class AudioPlayer : GameObject
     {
         MyGame.OnScreenSwitch += PlayMusic;
 
-        InteractionHitbox.OnDeath += PlayDeathSound;
+        Skull.OnWalkingStart += PlayWalkingSound;
+        Skull.OnWalkingStop += StopWalkingSound;
+
+        PlayerInteractionHitbox.OnDeath += PlayDeathSound;
+        Button.OnButtonClicked += PlayClickSound;
+        PlayerInteractionHitbox.OnGoalReached += PlayLevelFinishSound;
+        MyGame.OnGravitySwitch += PlayGravitySound;
+        PlayerInteractionHitbox.OnLegsPickup += PlayBonesPickupSound;
     }
 
     protected override void OnDestroy()
     {
         MyGame.OnScreenSwitch -= PlayMusic;
 
-        InteractionHitbox.OnDeath -= PlayDeathSound;
+        Skull.OnWalkingStart -= PlayWalkingSound;
+        Skull.OnWalkingStop -= StopWalkingSound;
+
+        PlayerInteractionHitbox.OnDeath -= PlayDeathSound;
+        Button.OnButtonClicked -= PlayClickSound;
+        PlayerInteractionHitbox.OnGoalReached -= PlayLevelFinishSound;
+        MyGame.OnGravitySwitch -= PlayGravitySound;
+        PlayerInteractionHitbox.OnLegsPickup -= PlayBonesPickupSound;
     }
 
     private void PlayMusic(MyGame.ScreenState currentScreen)
@@ -38,13 +58,39 @@ class AudioPlayer : GameObject
         {
             case MyGame.ScreenState.MENU:
                 {
-                    if (_musicChannel != null)
-                    {
-                        _musicChannel.Stop();
-                    }
-                    _musicChannel = _music.Play();
+                    PlayNewMusic(_menuMusic);
                     break;
                 }
+            case MyGame.ScreenState.LEVEL1:
+                {
+                    PlayNewMusic(_levelMusic);
+                    break;
+                }
+        }
+    }
+
+    /// <summary>
+    /// stops old music and plays the new music
+    /// </summary>
+    /// <param name="music">new music to play</param>
+    private void PlayNewMusic(Sound music)
+    {
+        if (_musicChannel != null)
+        {
+            _musicChannel.Stop();
+        }
+        _musicChannel = music.Play();
+    }
+
+    private void PlayWalkingSound()
+    {
+        _walkingChannel = _walkingSound.Play();
+    }
+    private void StopWalkingSound()
+    {
+        if (_walkingChannel != null)
+        {
+            _walkingChannel.Stop();
         }
     }
 
@@ -52,5 +98,25 @@ class AudioPlayer : GameObject
     {
         new Sound("placeholder_death_sound.wav").Play();
     }
+
+    private void PlayClickSound(MyGame.ScreenState leaveEmpty)
+    {
+        new Sound("placeholder_death_sound.wav").Play();
+    }
+
+    private void PlayLevelFinishSound()
+    {
+        new Sound("placeholder_death_sound.wav").Play();
+    }
+
+    private void PlayGravitySound(MyGame.GravityDirection leaveEmpty)
+    {
+        new Sound("placeholder_death_sound.wav").Play();
+    }
+
+     private void PlayBonesPickupSound()
+    {
+        new Sound("placeholder_death_sound.wav").Play();
+    }   
 }
 

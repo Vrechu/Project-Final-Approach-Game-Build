@@ -8,10 +8,13 @@ class Skull : SolidObject
 {
     private float _speed = 0;
     private Vec2 _gravityVelocity;
+
     private Vec2 _WalkingDirection = new Vec2(0, 1);
     private float _walkingSpeed = 5; //speed at which the player walks along surfaces
     private bool isGrounded = false;
     private bool canWalk = false;
+    public static event Action OnWalkingStart;
+    public static event Action OnWalkingStop;
 
     private float _teleportCooldownTime = 1; // cooldown time for using a portal in seconds
     private float oldTime = -1;
@@ -30,7 +33,7 @@ class Skull : SolidObject
     /// </summary>
     /// <param name="px">object x position</param>
     /// <param name="py">object y position</param>
-    public Skull(float px, float py) : base("skull.png",1, 1, px, py)
+    public Skull(float px, float py) : base("skull.png", 1, 1, px, py)
     {
         SetXY(px, py);
         SetScaleXY(0.95f, 1f);
@@ -202,21 +205,26 @@ class Skull : SolidObject
     /// <param name="animationState">animation state to set the animation to</param>
     private void SetAnimationState(AnimationState animationState)
     {
+        bool stateIsNew = false;
+        if (animationState != _animationState) { stateIsNew = true; }
         _animationState = animationState;
         switch (_animationState)
         {
             case AnimationState.IDLE:
                 {
+                    if (stateIsNew) { OnWalkingStop?.Invoke(); }
                     _playerAnimations.SetCycle(5, 5, _animationtime);
                     break;
                 }
             case AnimationState.WALKING:
                 {
+                    if (stateIsNew) { OnWalkingStart?.Invoke(); }
                     _playerAnimations.SetCycle(1, 5, _animationtime);
                     break;
                 }
             case AnimationState.FALLING:
                 {
+                    if (stateIsNew) { OnWalkingStop?.Invoke(); }
                     _playerAnimations.SetCycle(6, 6, _animationtime);
                     break;
                 }

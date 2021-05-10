@@ -13,7 +13,7 @@ class Level : GameObject
     private MyGame.ScreenState _nextScreen;
     private Map levelData;
     private float _sideLength = 64;
-    private float _widthOffset = 200;
+    private float _widthOffset = 320;
     private float _heightOffset = 100;
 
     /// <summary>
