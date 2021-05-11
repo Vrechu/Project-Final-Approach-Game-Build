@@ -10,7 +10,7 @@ class Skull : SolidObject
     private Vec2 _gravityVelocity;
 
     private Vec2 _WalkingDirection = new Vec2(0, 1);
-    private float _walkingSpeed = 5; //speed at which the player walks along surfaces
+    private float _walkingSpeed = 60; //speed at which the player walks along surfaces
     private bool isGrounded = false;
     private bool canWalk = false;
     public static event Action OnWalkingStart;
@@ -23,7 +23,7 @@ class Skull : SolidObject
     private PlayerAnimations _playerAnimations;
     private enum AnimationState
     {
-        IDLE, WALKING, FALLING
+        IDLE, WALKING, STANDING
     }
     private AnimationState _animationState;
     private byte _animationtime = 5;
@@ -36,9 +36,10 @@ class Skull : SolidObject
     public Skull(float px, float py) : base("skull.png", 1, 1, px, py)
     {
         SetXY(px, py);
-        SetScaleXY(0.98f, 0.99f);
+        SetScaleXY(0.96f, 0.99f);
         AddChild(new PlayerInteractionHitbox());
         AddChild(_playerAnimations = new PlayerAnimations());
+        alpha = 0;
 
         MyGame.OnGravitySwitch += RotateSkull;
         PlayerInteractionHitbox.OnLegsPickup += PickupLegs;
@@ -60,6 +61,7 @@ class Skull : SolidObject
         CheckIfGounded();
         Walk();
         TeleportCooldown();
+        Console.WriteLine(_speed);
     }
 
 
@@ -69,8 +71,8 @@ class Skull : SolidObject
     private void MoveSkull()
     {
         Vec2 _oldPosition = new Vec2(x, y);
-        _gravityVelocity += MyGame.GravityVector;
-        MoveUntilCollision(_gravityVelocity.x, _gravityVelocity.y, game.FindObjectsOfType<SolidObject>());
+        _gravityVelocity += MyGame.GravityVector / Time.deltaTime;
+        MoveUntilCollision(_gravityVelocity.x, _gravityVelocity.y, game.FindObjectsOfType<SolidObject>()) ;
         _speed = new Vec2(_oldPosition.x - x, _oldPosition.y - y).Length();
         _gravityVelocity = _gravityVelocity.Normalized() * _speed;
     }
@@ -87,7 +89,6 @@ class Skull : SolidObject
         else if (_speed > 0)
         {
             isGrounded = false;
-            SetAnimationState(AnimationState.FALLING);
         }
     }
 
@@ -110,8 +111,11 @@ class Skull : SolidObject
                 MoveUntilCollision(_WalkingDirection.x, _WalkingDirection.y, game.FindObjectsOfType<SolidObject>());
                 _playerAnimations.width *= 1;
             }
-            else SetAnimationState(AnimationState.IDLE);
+            else if (!canWalk) { SetAnimationState(AnimationState.IDLE); }
+            else SetAnimationState(AnimationState.STANDING);
         }
+        else if (!canWalk) { SetAnimationState(AnimationState.IDLE); }
+        else SetAnimationState(AnimationState.STANDING);
     }
 
     /// <summary>
@@ -147,7 +151,7 @@ class Skull : SolidObject
                     break;
                 }
         }
-        _WalkingDirection = _WalkingDirection.Normalized() * _walkingSpeed;
+        _WalkingDirection = _WalkingDirection.Normalized() * _walkingSpeed / Time.deltaTime;
     }
 
     /// <summary>
@@ -213,19 +217,22 @@ class Skull : SolidObject
             case AnimationState.IDLE:
                 {
                     if (stateIsNew) { OnWalkingStop?.Invoke(); }
-                    _playerAnimations.SetCycle(5, 5, _animationtime);
+                    _playerAnimations.SetCycle(0);
+                    break;
+                }
+            case AnimationState.STANDING:
+                {
+                    if (stateIsNew) { OnWalkingStop?.Invoke(); }
+                    _playerAnimations.SetCycle(2);
                     break;
                 }
             case AnimationState.WALKING:
                 {
-                    if (stateIsNew) { OnWalkingStart?.Invoke(); }
-                    _playerAnimations.SetCycle(1, 5, _animationtime);
-                    break;
-                }
-            case AnimationState.FALLING:
-                {
-                    if (stateIsNew) { OnWalkingStop?.Invoke(); }
-                    _playerAnimations.SetCycle(6, 6, _animationtime);
+                    if (stateIsNew)
+                    {
+                        OnWalkingStart?.Invoke();
+                        _playerAnimations.SetCycle(4, 7, _animationtime);
+                    }
                     break;
                 }
         }

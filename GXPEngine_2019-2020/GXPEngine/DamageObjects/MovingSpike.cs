@@ -25,7 +25,7 @@ class MovingSpike : SolidObject
     /// <param name="py">object y position</param>
     public MovingSpike(float px, float py, int frame) : base("square.png",1, 1, px, py)
     {
-        SetScaleXY(0.98f, 0.99f);
+        SetScaleXY(0.98f, 1);
         SetFrame(frame);
         AddChild(new DamageHitbox());
         AddChild(_portalHitbox = new PortalHitbox());
@@ -50,6 +50,7 @@ class MovingSpike : SolidObject
     void Update()
     {
         MoveWall();
+        TeleportCooldown();
     }
 
     /// <summary>
@@ -58,7 +59,7 @@ class MovingSpike : SolidObject
     private void MoveWall()
     {
         Vec2 _oldPosition = new Vec2(x, y);
-        _gravityVelocity += MyGame.GravityVector;
+        _gravityVelocity += MyGame.GravityVector / Time.deltaTime;
         MoveUntilCollision(_gravityVelocity.x, _gravityVelocity.y, game.FindObjectsOfType<SolidObject>());
         _speed = new Vec2(_oldPosition.x - x, _oldPosition.y - y).Length();
         _gravityVelocity = _gravityVelocity.Normalized() * _speed;

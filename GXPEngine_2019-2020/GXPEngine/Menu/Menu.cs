@@ -9,7 +9,7 @@ class Menu : Sprite
     /// <summary>
     /// menu class
     /// </summary>
-    public Menu() : base("placeholder_menu.png")
+    public Menu() : base("Graveyard.png")
     {
         AddChild(new Button("Play_Game.png", width / 2, height / 2, MyGame.ScreenState.LEVEL1));
         AddChild(new Button("Help.png", width / 2, height / 3 * 2, MyGame.ScreenState.INTRO));

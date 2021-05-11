@@ -26,14 +26,14 @@ public class MyGame : Game
 
 	public static event Action<GravityDirection> OnGravitySwitch;
 
-	public static float GravityAccaleration = 0.2f; // Rate of acceleration
+	public static float GravityAccaleration = 8f; // Rate of acceleration
 	public static Vec2 GravityVector = new Vec2();
 	private Vec2 _upGravityVec = new Vec2(0, -1).Normalized();
 	private Vec2 _downGravityVec = new Vec2(0, 1).Normalized();
 	private Vec2 _leftGravityVec = new Vec2(-1, 0).Normalized();
 	private Vec2 _rightGravityVec = new Vec2(1, 0).Normalized();
 
-	private float _gravitySwitchCooldownTime = 2f; //Cooldown timer in seconds
+	private float _gravitySwitchCooldownTime = 1f; //Cooldown timer in seconds
 	private bool canSwitchGravity = true;
 	private float oldTime =Time.time;
     #endregion
@@ -46,7 +46,7 @@ public class MyGame : Game
 		Level.OnLevelStart += ResetGravity;
 		Level.OnLevelFinished += SwitchScreen;
 		
-		AddChild(new AudioPlayer());
+		/*AddChild(new AudioPlayer());*/
 		SwitchScreen(ScreenState.MENU);
 		SetGravityDirection(GravityDirection.DOWN);
 	}
@@ -97,12 +97,12 @@ public class MyGame : Game
 					}
 				case ScreenState.INTRO:
 					{
-						StartDialogueWindow("placeholder_tutorial.png", ScreenState.MENU);
+						StartDialogueWindow("Graveyard.png", ScreenState.MENU);
 						break;
 					}
 				case ScreenState.CREDITS:
 					{
-						StartDialogueWindow("placeholder_credits.png", ScreenState.MENU);
+						StartDialogueWindow("Graveyard.png", ScreenState.MENU);
 						break;
 					}
 				#endregion
@@ -110,32 +110,32 @@ public class MyGame : Game
 				#region levels
 				case ScreenState.LEVEL1:
 					{
-						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.LEVEL2);
+						StartLevel("Level 1.tmx", "Graveyard.png", ScreenState.LEVEL2);
 						break;
 					}
 				case ScreenState.LEVEL2:
 					{
-						StartLevel("Level_1.tmx", "placeholder_level.png", ScreenState.LEVEL3);
+						StartLevel("Level 2.tmx", "Graveyard.png", ScreenState.LEVEL3);
 						break;
 					}
 				case ScreenState.LEVEL3:
 					{
-						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.LEVEL4);
+						StartLevel("Level 3.tmx", "Graveyard.png", ScreenState.LEVEL4);
 						break;
 					}
 				case ScreenState.LEVEL4:
 					{
-						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.LEVEL5);
+						StartLevel("Level 4.tmx", "Graveyard.png", ScreenState.LEVEL5);
 						break;
 					}
 				case ScreenState.LEVEL5:
 					{
-						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.LEVEL6);
+						StartLevel("Level 5.tmx", "Hell.png", ScreenState.LEVEL6);
 						break;
 					}
 				case ScreenState.LEVEL6:
 					{
-						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.CREDITS);
+						StartLevel("Level 6.tmx", "Hell.png", ScreenState.CREDITS);
 						break;
 					}
 				#endregion
