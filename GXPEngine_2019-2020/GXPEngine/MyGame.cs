@@ -7,7 +7,7 @@ public class MyGame : Game
     #region screen management
     public enum ScreenState
 	{
-		NULL, MENU, INTRO, CREDITS, STORYCONCEPT, 
+		NULL, MENU, HELP, CREDITS, STORYCONCEPT, 
 		TUTORIAL, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6
 	}
 	private ScreenState _screenState;
@@ -95,14 +95,14 @@ public class MyGame : Game
 						StartMenu();
 						break;
 					}
-				case ScreenState.INTRO:
+				case ScreenState.HELP:
 					{
-						StartDialogueWindow("Graveyard.png", ScreenState.MENU);
+						StartDialogueWindow("Help_Menu_1.1.png", ScreenState.MENU);
 						break;
 					}
 				case ScreenState.CREDITS:
 					{
-						StartDialogueWindow("Graveyard.png", ScreenState.MENU);
+						StartDialogueWindow("Credits_Screen.png", ScreenState.MENU);
 						break;
 					}
 				case ScreenState.STORYCONCEPT:
@@ -126,12 +126,12 @@ public class MyGame : Game
 					}
 				case ScreenState.LEVEL2:
 					{
-						StartLevel("Level 2.tmx", "Graveyard.png", ScreenState.LEVEL3);
+						StartLevel("Level 2.tmx", "Cave.png", ScreenState.LEVEL3);
 						break;
 					}
 				case ScreenState.LEVEL3:
 					{
-						StartLevel("Level 3.tmx", "Graveyard.png", ScreenState.LEVEL4);
+						StartLevel("Level 3.tmx", "Cave.png", ScreenState.LEVEL4);
 						break;
 					}
 				case ScreenState.LEVEL4:

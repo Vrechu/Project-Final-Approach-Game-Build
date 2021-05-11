@@ -13,6 +13,6 @@ class DialogueWindow : Sprite
     /// <param name="nextScreen">next screen to be loaded</param>
     public DialogueWindow(string screenImage, MyGame.ScreenState nextScreen) : base(screenImage)
     {
-        AddChild(new Button("Next.png", width / 2, height / 2, nextScreen));
+        AddChild(new Button("Next.png", width / 2, 900, nextScreen));
     }
 }

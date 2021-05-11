@@ -9,10 +9,11 @@ class Menu : Sprite
     /// <summary>
     /// menu class
     /// </summary>
-    public Menu() : base("Graveyard.png")
+    public Menu() : base("MenuScreen.png")
     {
-        AddChild(new Button("Play_Game.png", width / 2, height / 2, MyGame.ScreenState.TUTORIAL));
-        AddChild(new Button("Help.png", width / 2, height / 3 * 2, MyGame.ScreenState.INTRO));
-        AddChild(new Button("Credits.png", width / 2, height / 4 * 3, MyGame.ScreenState.CREDITS));
+        AddChild(new Button("Play_Game.png", width / 2,450, MyGame.ScreenState.TUTORIAL));
+        AddChild(new Button("Help.png", width / 2, 600, MyGame.ScreenState.HELP));
+        AddChild(new Button("Story.png", width / 2, 720, MyGame.ScreenState.STORYCONCEPT));
+        AddChild(new Button("Credits.png", width / 2, 840, MyGame.ScreenState.CREDITS));
     }
 }

@@ -14,7 +14,7 @@ class Level : GameObject
     private Map levelData;
     private float _sideLength = 64;
     private float _widthOffset = 320;
-    private float _heightOffset = 100;
+    private float _heightOffset = 130;
 
     /// <summary>
     /// level creator
@@ -31,8 +31,9 @@ class Level : GameObject
         _widthOffset += _sideLength / 2;
         OnLevelStart?.Invoke();
         AddChild(new Sprite(backgroundFileName));
+        AddChild(new Sprite("Level_Overlay.png"));
         SpawnTiles(levelData);
-        AddChild(new GravityHUD(game.width/2, 800));
+        AddChild(new GravityHUD(1550, 785));
     }
 
     protected override void OnDestroy()

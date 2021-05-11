@@ -61,7 +61,6 @@ class Skull : SolidObject
         CheckIfGounded();
         Walk();
         TeleportCooldown();
-        Console.WriteLine(_speed);
     }
 
 

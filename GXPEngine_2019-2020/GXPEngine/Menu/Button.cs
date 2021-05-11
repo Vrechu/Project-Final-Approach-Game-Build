@@ -38,9 +38,7 @@ class Button : AnimationSprite
         {
             SetFrame(0);
             if (Input.GetMouseButtonDown(0))
-            {
                 OnButtonClicked?.Invoke(_nextScreen);
-            }
         }
         else
         {
