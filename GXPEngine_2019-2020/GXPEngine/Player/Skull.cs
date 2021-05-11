@@ -36,7 +36,7 @@ class Skull : SolidObject
     public Skull(float px, float py) : base("skull.png", 1, 1, px, py)
     {
         SetXY(px, py);
-        SetScaleXY(0.95f, 1f);
+        SetScaleXY(0.98f, 0.99f);
         AddChild(new PlayerInteractionHitbox());
         AddChild(_playerAnimations = new PlayerAnimations());
 

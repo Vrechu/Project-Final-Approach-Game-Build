@@ -11,10 +11,10 @@ class Goal : Sprite
     /// </summary>
     /// <param name="px">objec x position</param>
     /// <param name="py">object y position</param>
-    public Goal(float px, float py) : base("goal.png")
+    public Goal(float px, float py) : base("Portal.png")
     {
         SetXY(px, py);
-        SetOrigin(width / 2, height / 2);
+        SetOrigin(width / 4, height / 4);
     }
 }
 

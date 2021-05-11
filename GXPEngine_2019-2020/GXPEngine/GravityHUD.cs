@@ -11,7 +11,7 @@ class GravityHUD : AnimationSprite
     /// </summary>
     /// <param name="px">object x position</param>
     /// <param name="py">object y position</param>
-    public GravityHUD(float px, float py) : base("placeholder_hud.png", 2, 2)
+    public GravityHUD(float px, float py) : base("Compass.png", 2, 2)
     {
         SetXY(px, py);
         SetHUD(MyGame.GravityDirection.DOWN);
@@ -38,12 +38,12 @@ class GravityHUD : AnimationSprite
                 }
             case MyGame.GravityDirection.DOWN:
                 {
-                    SetFrame(1);
+                    SetFrame(2);
                     break;
                 }
             case MyGame.GravityDirection.LEFT:
                 {
-                    SetFrame(2);
+                    SetFrame(1);
                     break;
                 }
             case MyGame.GravityDirection.RIGHT:

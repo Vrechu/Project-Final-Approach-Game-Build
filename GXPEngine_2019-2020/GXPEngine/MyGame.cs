@@ -8,8 +8,7 @@ public class MyGame : Game
     public enum ScreenState
 	{
 		NULL, MENU, INTRO, CREDITS, 
-		LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6,
-		COMIC1, COMIC2, COMIC3, COMIC4
+		LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6
 	}
 	private ScreenState _screenState;
 
@@ -116,53 +115,30 @@ public class MyGame : Game
 					}
 				case ScreenState.LEVEL2:
 					{
-						StartLevel("level2.tmx", "placeholder_level.png", ScreenState.COMIC2);
+						StartLevel("Level_1.tmx", "placeholder_level.png", ScreenState.LEVEL3);
 						break;
 					}
 				case ScreenState.LEVEL3:
 					{
-						StartLevel("level3.tmx", "placeholder_level.png", ScreenState.LEVEL4);
+						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.LEVEL4);
 						break;
 					}
 				case ScreenState.LEVEL4:
 					{
-						StartLevel("Tryout4.tmx", "placeholder_level.png", ScreenState.COMIC3);
+						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.LEVEL5);
 						break;
 					}
 				case ScreenState.LEVEL5:
 					{
-						StartLevel("Tryout4.tmx", "placeholder_level.png", ScreenState.LEVEL6);
+						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.LEVEL6);
 						break;
 					}
 				case ScreenState.LEVEL6:
 					{
-						StartLevel("Tryout4.tmx", "placeholder_level.png", ScreenState.COMIC4);
+						StartLevel("tryout5.tmx", "placeholder_level.png", ScreenState.CREDITS);
 						break;
 					}
 				#endregion
-
-				#region comic panels
-				case ScreenState.COMIC1:
-					{
-						StartDialogueWindow("placeholder_comic.png", ScreenState.LEVEL1);
-						break;
-					}
-				case ScreenState.COMIC2:
-					{
-						StartDialogueWindow("placeholder_comic.png", ScreenState.LEVEL3);
-						break;
-					}
-				case ScreenState.COMIC3:
-					{
-						StartDialogueWindow("placeholder_comic.png", ScreenState.LEVEL5);
-						break;
-					}
-				case ScreenState.COMIC4:
-					{
-						StartDialogueWindow("placeholder_comic.png", ScreenState.CREDITS);
-						break;
-					}
-					#endregion
 			}
 		}
 	}

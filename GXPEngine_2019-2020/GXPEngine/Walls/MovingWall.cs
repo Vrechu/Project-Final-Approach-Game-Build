@@ -24,7 +24,7 @@ class MovingWall : SolidObject
     /// <param name="py">object y positino</param>
     public MovingWall(string spriteImage, float px, float py) : base("square.png" ,1, 1 , px, py)
     {
-        SetScaleXY(0.95f, 1);
+        SetScaleXY(0.99f, 1);
         AddChild(_portalHitbox = new PortalHitbox());
         MyGame.OnGravitySwitch += RotateWall;
         PortalHitbox.OnPortalInHit += MoveToPortalOut;

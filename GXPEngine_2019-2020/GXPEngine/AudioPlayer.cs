@@ -36,6 +36,11 @@ class AudioPlayer : GameObject
         PlayerInteractionHitbox.OnGoalReached += PlayLevelFinishSound;
         MyGame.OnGravitySwitch += PlayGravitySound;
         PlayerInteractionHitbox.OnLegsPickup += PlayBonesPickupSound;
+
+        PlayerInteractionHitbox.OnPortalInHit += PlayPortalSound;
+        PlayerInteractionHitbox.OnPortalOutHit += PlayPortalSound;
+        PortalHitbox.OnPortalInHit += PlayObjectPortalSound;
+        PortalHitbox.OnPortalInHit += PlayObjectPortalSound;
     }
 
     protected override void OnDestroy()
@@ -50,6 +55,11 @@ class AudioPlayer : GameObject
         PlayerInteractionHitbox.OnGoalReached -= PlayLevelFinishSound;
         MyGame.OnGravitySwitch -= PlayGravitySound;
         PlayerInteractionHitbox.OnLegsPickup -= PlayBonesPickupSound;
+
+        PlayerInteractionHitbox.OnPortalInHit -= PlayPortalSound;
+        PlayerInteractionHitbox.OnPortalOutHit -= PlayPortalSound;
+        PortalHitbox.OnPortalInHit -= PlayObjectPortalSound;
+        PortalHitbox.OnPortalInHit -= PlayObjectPortalSound;
     }
 
     private void PlayMusic(MyGame.ScreenState currentScreen)
@@ -117,6 +127,15 @@ class AudioPlayer : GameObject
      private void PlayBonesPickupSound()
     {
         new Sound("placeholder_death_sound.wav").Play();
-    }   
+    }
+    private void PlayPortalSound()
+    {
+        new Sound("placeholder_death_sound.wav").Play();
+    }
+
+    private void PlayObjectPortalSound(GameObject leaveEmpty)
+    {
+        new Sound("placeholder_death_sound.wav").Play();
+    }
 }
 

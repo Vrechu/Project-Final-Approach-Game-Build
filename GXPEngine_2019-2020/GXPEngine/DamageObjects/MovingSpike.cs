@@ -25,7 +25,7 @@ class MovingSpike : SolidObject
     /// <param name="py">object y position</param>
     public MovingSpike(float px, float py, int frame) : base("square.png",1, 1, px, py)
     {
-        SetScaleXY(0.85f, 0.90f);
+        SetScaleXY(0.98f, 0.99f);
         SetFrame(frame);
         AddChild(new DamageHitbox());
         AddChild(_portalHitbox = new PortalHitbox());

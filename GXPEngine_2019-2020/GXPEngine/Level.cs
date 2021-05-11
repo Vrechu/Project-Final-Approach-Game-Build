@@ -85,12 +85,12 @@ class Level : GameObject
                             }
                         case 246:
                             {
-                                PlaceSpike(column, row, "Spike1.png", 270);
+                                PlaceSpike(column, row, "Spike1.png", 90);
                                 break;
                             }
                         case 276:
                             {
-                                PlaceSpike(column, row, "Spike1.png",  90);
+                                PlaceSpike(column, row, "Spike1.png",  270);
                                 break;
                             }
                         #endregion
@@ -108,12 +108,12 @@ class Level : GameObject
                             }
                         case 306:
                             {
-                                PlaceSpike(column, row, "Spike2.png", 270);
+                                PlaceSpike(column, row, "Spike2.png", 90);
                                 break;
                             }
                         case 336:
                             {
-                                PlaceSpike(column, row, "Spike2.png", 90);
+                                PlaceSpike(column, row, "Spike2.png", 270);
                                 break;
                             }
                         #endregion
@@ -131,12 +131,12 @@ class Level : GameObject
                             }
                         case 366:
                             {
-                                PlaceSpike(column, row, "Spike3.png", 270);
+                                PlaceSpike(column, row, "Spike3.png", 90);
                                 break;
                             }
                         case 396:
                             {
-                                PlaceSpike(column, row, "Spike3.png", 90);
+                                PlaceSpike(column, row, "Spike3.png", 270);
                                 break;
                             }
                         #endregion
@@ -230,7 +230,7 @@ class Level : GameObject
     /// <param name="row">tiled map row</param>
     private void PlaceMovingWall(float column, float row)
     {
-        AddChild(new MovingWall("moving_wall.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
+        AddChild(new MovingWall("Urn.png", column * _sideLength + _widthOffset, row * _sideLength + _heightOffset));
     }
 
     /// <summary>
