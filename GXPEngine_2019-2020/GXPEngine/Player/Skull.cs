@@ -19,6 +19,7 @@ class Skull : SolidObject
     private float _teleportCooldownTime = 1; // cooldown time for using a portal in seconds
     private float oldTime = -1;
     private bool canTeleport = true;
+    public static event Action OnTeleport;
 
     private PlayerAnimations _playerAnimations;
     private enum AnimationState
@@ -36,7 +37,7 @@ class Skull : SolidObject
     public Skull(float px, float py) : base("skull.png", 1, 1, px, py)
     {
         SetXY(px, py);
-        SetScaleXY(0.96f, 0.99f);
+        SetScaleXY(0.95f, 0.99f);
         AddChild(new PlayerInteractionHitbox());
         AddChild(_playerAnimations = new PlayerAnimations());
         alpha = 0;
@@ -170,6 +171,7 @@ class Skull : SolidObject
         {
             canTeleport = false;
             SetXY(game.FindObjectOfType<PortalOut>().x, game.FindObjectOfType<PortalOut>().y);
+            OnTeleport?.Invoke();
         }
     }
 
@@ -182,6 +184,7 @@ class Skull : SolidObject
         {
             canTeleport = false;
             SetXY(game.FindObjectOfType<PortalIn>().x, game.FindObjectOfType<PortalIn>().y);
+            OnTeleport?.Invoke();
         }
     }
 

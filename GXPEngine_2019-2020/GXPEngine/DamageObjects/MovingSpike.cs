@@ -14,6 +14,7 @@ class MovingSpike : SolidObject
     private bool canTeleport = true;
 
     private PortalHitbox _portalHitbox;
+    public static event Action OnTeleport;
 
     private AnimationSprite _imageSprite;
 
@@ -109,6 +110,7 @@ class MovingSpike : SolidObject
         {
             canTeleport = false;
             SetXY(game.FindObjectOfType<PortalOut>().x, game.FindObjectOfType<PortalOut>().y);
+            OnTeleport?.Invoke();
         }
     }
 
@@ -121,6 +123,7 @@ class MovingSpike : SolidObject
         {
             canTeleport = false;
             SetXY(game.FindObjectOfType<PortalIn>().x, game.FindObjectOfType<PortalIn>().y);
+            OnTeleport?.Invoke();
         }
     }
 

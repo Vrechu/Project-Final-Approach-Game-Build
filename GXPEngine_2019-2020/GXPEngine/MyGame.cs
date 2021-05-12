@@ -1,5 +1,4 @@
-using System;									// System contains a lot of default C# libraries 
-using System.Drawing;                           // System.Drawing contains a library used for canvas drawing below
+using System;			                        
 using GXPEngine;                                // GXPEngine contains the engine
 
 public class MyGame : Game
@@ -7,8 +6,8 @@ public class MyGame : Game
     #region screen management
     public enum ScreenState
 	{
-		NULL, MENU, HELP, CREDITS, STORYCONCEPT, 
-		TUTORIAL, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6
+		NULL, MENU, HELP1, HELP2, CREDITS, STORYCONCEPT, 
+		TUTORIAL, LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5
 	}
 	private ScreenState _screenState;
 
@@ -45,9 +44,9 @@ public class MyGame : Game
 		PlayerInteractionHitbox.OnDeath += ResetCurrentLevel;
 		Level.OnLevelStart += ResetGravity;
 		Level.OnLevelFinished += SwitchScreen;
-		
-		/*AddChild(new AudioPlayer());*/
-		SwitchScreen(ScreenState.MENU);
+
+        AddChild(new AudioPlayer());
+        SwitchScreen(ScreenState.MENU);
 		SetGravityDirection(GravityDirection.DOWN);
 	}
 
@@ -95,9 +94,14 @@ public class MyGame : Game
 						StartMenu();
 						break;
 					}
-				case ScreenState.HELP:
+				case ScreenState.HELP1:
 					{
-						StartDialogueWindow("Help_Menu_1.1.png", ScreenState.MENU);
+						StartDialogueWindow("Help_Menu_Slide_1.png", ScreenState.HELP2);
+						break;
+					}
+				case ScreenState.HELP2:
+					{
+						StartDialogueWindow("Help_Menu_Slide_2.png", ScreenState.MENU);
 						break;
 					}
 				case ScreenState.CREDITS:
@@ -126,7 +130,7 @@ public class MyGame : Game
 					}
 				case ScreenState.LEVEL2:
 					{
-						StartLevel("Level 2.tmx", "Cave.png", ScreenState.LEVEL3);
+						StartLevel("Level 2.tmx", "Graveyard.png", ScreenState.LEVEL3);
 						break;
 					}
 				case ScreenState.LEVEL3:
@@ -136,20 +140,15 @@ public class MyGame : Game
 					}
 				case ScreenState.LEVEL4:
 					{
-						StartLevel("Level 4.tmx", "Graveyard.png", ScreenState.LEVEL5);
+						StartLevel("Level 4.tmx", "Cave.png", ScreenState.LEVEL5);
 						break;
 					}
 				case ScreenState.LEVEL5:
 					{
-						StartLevel("Level 5.tmx", "Hell.png", ScreenState.LEVEL6);
+						StartLevel("Level 5.tmx", "Hell.png", ScreenState.CREDITS);
 						break;
 					}
-				case ScreenState.LEVEL6:
-					{
-						StartLevel("Level 6.tmx", "Hell.png", ScreenState.CREDITS);
-						break;
-					}
-				#endregion
+					#endregion
 			}
 		}
 	}
@@ -229,7 +228,7 @@ public class MyGame : Game
 	/// </summary>
 	private void GravityInputs()
 	{
-		if (canSwitchGravity)
+		if (canSwitchGravity && game.FindObjectOfType<Level>() != null)
 		{
 			if (Input.GetKeyDown(Key.UP))
 			{

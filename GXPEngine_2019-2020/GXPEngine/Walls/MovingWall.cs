@@ -14,6 +14,7 @@ class MovingWall : SolidObject
     private bool canTeleport = true;
 
     private PortalHitbox _portalHitbox;
+    public static event Action OnTeleport;
     private Sprite _imageSprite;
 
     /// <summary>
@@ -102,6 +103,7 @@ class MovingWall : SolidObject
         {
             canTeleport = false;
             SetXY(game.FindObjectOfType<PortalOut>().x, game.FindObjectOfType<PortalOut>().y);
+            OnTeleport?.Invoke();
         }
     }
 
@@ -114,6 +116,7 @@ class MovingWall : SolidObject
         {
             canTeleport = false;
             SetXY(game.FindObjectOfType<PortalIn>().x, game.FindObjectOfType<PortalIn>().y);
+            OnTeleport?.Invoke();
         }
     }
 

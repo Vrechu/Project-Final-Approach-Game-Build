@@ -8,7 +8,9 @@ class AudioPlayer : GameObject
 {
     private SoundChannel _musicChannel;
     readonly private Sound _menuMusic;
-    readonly private Sound _levelMusic;
+    readonly private Sound _graveyardMusic;
+    readonly private Sound _caveMusic;
+    readonly private Sound _hellMusic;
 
     private SoundChannel _walkingChannel;
     readonly private Sound _walkingSound;
@@ -18,9 +20,11 @@ class AudioPlayer : GameObject
     /// </summary>
     public AudioPlayer()
     {
-        _menuMusic = new Sound("placeholder_background_music.mp3", true, true);
-        _levelMusic = new Sound("placeholder_background_music.mp3", true, true);
-        _walkingSound = new Sound("placeholder_death_sound.wav", true, true);
+        _menuMusic = new Sound("Menu_music.mp3", true, true);
+        _graveyardMusic = new Sound("Graveyard_level_music.mp3", true, true);
+        _caveMusic = new Sound("Cave_level_music.mp3", true, true);
+        _hellMusic = new Sound("Hell_level_music.mp3", true, true);
+        _walkingSound = new Sound("Walking.wav", true, true);
         EventSubscriptions();
     }
 
@@ -38,9 +42,9 @@ class AudioPlayer : GameObject
         PlayerInteractionHitbox.OnLegsPickup += PlayBonesPickupSound;
 
         PlayerInteractionHitbox.OnPortalInHit += PlayPortalSound;
-        PlayerInteractionHitbox.OnPortalOutHit += PlayPortalSound;
-        PortalHitbox.OnPortalInHit += PlayObjectPortalSound;
-        PortalHitbox.OnPortalInHit += PlayObjectPortalSound;
+        Skull.OnTeleport += PlayPortalSound;
+        MovingWall.OnTeleport += PlayPortalSound;
+        MovingSpike.OnTeleport += PlayPortalSound;
     }
 
     protected override void OnDestroy()
@@ -56,10 +60,9 @@ class AudioPlayer : GameObject
         MyGame.OnGravitySwitch -= PlayGravitySound;
         PlayerInteractionHitbox.OnLegsPickup -= PlayBonesPickupSound;
 
-        PlayerInteractionHitbox.OnPortalInHit -= PlayPortalSound;
-        PlayerInteractionHitbox.OnPortalOutHit -= PlayPortalSound;
-        PortalHitbox.OnPortalInHit -= PlayObjectPortalSound;
-        PortalHitbox.OnPortalInHit -= PlayObjectPortalSound;
+        Skull.OnTeleport -= PlayPortalSound;
+        MovingWall.OnTeleport -= PlayPortalSound;
+        MovingSpike.OnTeleport -= PlayPortalSound;
     }
 
     private void PlayMusic(MyGame.ScreenState currentScreen)
@@ -71,9 +74,19 @@ class AudioPlayer : GameObject
                     PlayNewMusic(_menuMusic);
                     break;
                 }
-            case MyGame.ScreenState.LEVEL1:
+            case MyGame.ScreenState.TUTORIAL:
                 {
-                    PlayNewMusic(_levelMusic);
+                    PlayNewMusic(_graveyardMusic);
+                    break;
+                }
+            case MyGame.ScreenState.LEVEL3:
+                {
+                    PlayNewMusic(_caveMusic);
+                    break;
+                }
+            case MyGame.ScreenState.LEVEL5:
+                {
+                    PlayNewMusic(_hellMusic);
                     break;
                 }
         }
@@ -92,6 +105,9 @@ class AudioPlayer : GameObject
         _musicChannel = music.Play();
     }
 
+    /// <summary>
+    /// plays the walking sound while the player is walking
+    /// </summary>
     private void PlayWalkingSound()
     {
         _walkingChannel = _walkingSound.Play();
@@ -106,36 +122,31 @@ class AudioPlayer : GameObject
 
     private void PlayDeathSound()
     {
-        new Sound("placeholder_death_sound.wav").Play();
+        new Sound("Fail.wav").Play();
     }
 
     private void PlayClickSound(MyGame.ScreenState leaveEmpty)
     {
-        new Sound("placeholder_death_sound.wav").Play();
+        new Sound("Clicking_the_button.wav").Play();
     }
 
     private void PlayLevelFinishSound()
     {
-        new Sound("placeholder_death_sound.wav").Play();
+        new Sound("Pass-the-level.wav").Play();
     }
 
     private void PlayGravitySound(MyGame.GravityDirection leaveEmpty)
     {
-        new Sound("placeholder_death_sound.wav").Play();
+        new Sound("Moving_gravity.wav").Play();
     }
 
      private void PlayBonesPickupSound()
     {
-        new Sound("placeholder_death_sound.wav").Play();
+        new Sound("Collecting.wav").Play();
     }
     private void PlayPortalSound()
     {
-        new Sound("placeholder_death_sound.wav").Play();
-    }
-
-    private void PlayObjectPortalSound(GameObject leaveEmpty)
-    {
-        new Sound("placeholder_death_sound.wav").Play();
+        new Sound("Tiny_portals.wav").Play();
     }
 }
 
